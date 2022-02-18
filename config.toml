@@ -4,6 +4,7 @@ title = "method_missing(*)"
 rssLimit = 20
 copyright = "2022 Radish All rights reserved"
 minify = false
+canonifyurls = true
 
 [Author]
   name = "radish"
