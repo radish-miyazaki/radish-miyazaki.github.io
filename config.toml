@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://radish-miyazaki.github.io/"
 languageCode = "ja-jp"
 title = "method_missing(*)"
 rssLimit = 20
