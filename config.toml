@@ -1,13 +1,12 @@
-baseURL = "/hugo-theme-serial-programmer/"
-languageCode = "en-us"
-title = "Hugo Serial Programmer"
+baseURL = "/"
+languageCode = "ja-jp"
+title = "method_missing(*)"
 rssLimit = 20
-copyright = "2021 Janne Kemppainen All rights reserved"
+copyright = "Radish All rights reserved"
 minify = false
 
 [Author]
-  name = "sharadcodes"
-  email = "me@example.com"
+  name = "radish"
 
 [permalinks]
   posts = "/:year/:month/:day/:filename"

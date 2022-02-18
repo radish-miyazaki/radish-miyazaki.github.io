@@ -1,7 +1,7 @@
 ---
 title: Hugo Markdown
 date: 2021-11-04
-tags: ["hugo"]
+tags: ["Ruby"]
 ---
 
 Text can be **bold**, _italic_, ~~strikethrough~~ or `keyword`
