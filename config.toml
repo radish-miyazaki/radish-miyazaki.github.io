@@ -7,7 +7,7 @@ minify = false
 summaryLength = 30
 
 [params]
-  description = 'This blog is for learning to techs.'
+  description = 'Radish technical blog.'
   images = ['post-cover.png']
 
 [Author]
