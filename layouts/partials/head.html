@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{site.BaseURL}}assets/css/blog.css" />
   {{ end}}
   <link rel="stylesheet" href="{{site.BaseURL}}assets/css/common.css" />
+  <link rel="icon" type="image/png" href="{{site.BaseURL}}assets/icons/ruby.png" />
   {{ range .AlternativeOutputFormats -}}
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
   {{ end -}}
