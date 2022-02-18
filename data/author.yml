@@ -1,7 +1,12 @@
 name: Radish
 dp: https://avatars.githubusercontent.com/u/71998099
-description: "Radish（ラディッシュ）です。<br />
-自己学習したことを忘れないために捕捉するためのブログです。
+description: "
+<p>
+  Radish（ラディッシュ）です。
+</p>
+<p>
+  自己学習したことを忘れないために捕捉するためのブログです。
+</p>
 "
 frontend:
   - name: javascript
