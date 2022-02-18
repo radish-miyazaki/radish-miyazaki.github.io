@@ -7,7 +7,7 @@ minify = false
 canonifyurls = true
 
 [params]
-  description = 'Blog for Radish'
+  description = 'This blog is for learning to techs.'
   images = ['post-cover.png']
 
 [Author]
