@@ -5,8 +5,10 @@ rssLimit = 20
 copyright = "2022 Radish All rights reserved"
 minify = false
 canonifyurls = true
-description = 'Blog for Radish'
-images = ['post-cover.png']
+
+[params]
+  description = 'Blog for Radish'
+  images = ['post-cover.png']
 
 [Author]
   name = "radish"
