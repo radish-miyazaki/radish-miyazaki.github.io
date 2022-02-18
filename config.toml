@@ -1,9 +1,11 @@
-baseURL = "/radish/"
+baseURL = "https://radish-miyazaki.github.io"
 languageCode = "ja-jp"
 title = "method_missing(*)"
 rssLimit = 20
 copyright = "{{ YEAR }} Radish All rights reserved"
 minify = false
+canonifyurls = true
+publishDir = "docs"
 
 [Author]
   name = "radish"
