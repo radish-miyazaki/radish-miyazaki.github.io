@@ -14,7 +14,7 @@
           <small class="date">{{ .Date.Format "2006-01-02 (Mon)" }}</small>
           <div class="tags">
             {{ range .Params.Tags }}
-            <a href="{{site.BaseURL}}tags/{{ . }}" class="tag">{{ . }}</a>
+            <a href="{{site.BaseURL}}/tags/{{ . }}" class="tag">{{ . }}</a>
             {{ end }}
           </div>
         </article>
