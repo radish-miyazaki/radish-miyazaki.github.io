@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,300;0,400;0,800;1,100;1,300;1,400;1,800&display=swap");
 
 header .site-title {
-  font-size: 4rem;
+  font-size: 2rem;
   font-weight: bolder;
   line-height: 110%;
   color: var(--white-1);
@@ -44,6 +44,7 @@ main {
   align-items: center;
   gap: 0.4rem;
   font-size: 14px;
+  flex-wrap: wrap;
 }
 #frontend-wrapper img, #backend-wrapper img {
   width: 24px;
@@ -117,17 +118,15 @@ main {
   body {
     padding: 1.5rem;
   }
-  header .site-title {
-    font-size: 3rem;
-  }
 }
 
 @media screen and (max-width: 550px) {
-  header .site-title {
-    font-size: 3rem;
-  }
   .articles {
     row-gap: 1.2rem;
+  }
+  #frontend-wrapper img, #backend-wrapper img {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -137,6 +136,9 @@ main {
   }
   #bio {
     align-items: flex-start;
+  }
+  header .site-title {
+    font-size: 1.4rem;
   }
   main,
   .articles {
@@ -150,14 +152,15 @@ main {
     margin: 2rem 0 3rem 0;
     row-gap: 1.2rem;
   }
-  header .site-title {
-    font-size: 2.4rem;
-  }
   .article {
     padding: 1.2rem;
   }
   .articles .article .article-title,
   .articles .article .article-title a {
     font-size: 1rem;
+  }
+  #frontend-wrapper img, #backend-wrapper img {
+    width: 14px;
+    height: 14px;
   }
 }

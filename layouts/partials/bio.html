@@ -11,16 +11,17 @@
             </a>
             {{ end }}
         </div>
-        <div id="frontend-wrapper">
-            Frontend: {{ range site.Data.author.frontend }}
-            <img src="{{ site.BaseURL }}/assets/icons/{{ .name }}.png" alt=""/>
-            {{ end }}
-
-        </div>
-        <div id="backend-wrapper">
-            Backend: {{ range site.Data.author.backend }}
-            <img src="{{ site.BaseURL }}/assets/icons/{{ .name }}.png" alt=""/>
-            {{ end }}
-        </div>
     </section>
 </section>
+<div style="">
+    <div id="frontend-wrapper">
+        Frontend: {{ range site.Data.author.frontend }}
+        <img src="{{ site.BaseURL }}/assets/icons/{{ .name }}.png" alt=""/>
+        {{ end }}
+    </div>
+    <div id="backend-wrapper">
+        Backend: {{ range site.Data.author.backend }}
+        <img src="{{ site.BaseURL }}/assets/icons/{{ .name }}.png" alt=""/>
+        {{ end }}
+    </div>
+</div>
