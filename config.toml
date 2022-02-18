@@ -4,6 +4,7 @@ title = "method_missing(*)"
 rssLimit = 20
 copyright = "2022 Radish All rights reserved"
 minify = false
+summarylength = 10
 
 [params]
   description = 'This blog is for learning to techs.'
