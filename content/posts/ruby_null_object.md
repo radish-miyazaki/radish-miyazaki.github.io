@@ -22,7 +22,8 @@ end
 
 class Hoge
   def process_huga(huga)
-    huga || NullHuga.new
+    # create_hugaはhuga or nullを返す設定
+    create_huga || NullHuga.new
   end
 end	
 ```
