@@ -1,7 +1,6 @@
 ---
 title: "Type alias vs Interface"
 date: 2022-02-24
-draft: true
 tags: ["typescript"]
 ---
 ## 概要
@@ -134,7 +133,7 @@ const b: B = {
 
 型エイリアスの場合は、コンパイルエラーになる。
 
-宣言のマージはTypeScriptの特徴的な機能の1つなので、また別に記事を作成予定
+宣言のマージはTypeScriptの特徴的な機能の1つなので、また別に記事を作成予定。
 
 ## 参考文献
 [プログラミングTypeScript ――スケールするJavaScriptアプリケーション開発](https://www.oreilly.co.jp/books/9784873119045/)
