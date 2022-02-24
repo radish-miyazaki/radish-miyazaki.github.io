@@ -115,12 +115,12 @@ interface B extends A {
 ```typescript
 const b: B = {
   good: (x) => `${x}`,
-	// Error: Type 'string | number' is not assignable to type 'string'.
+  // Error: Type 'string | number' is not assignable to type 'string'.
   // Type 'number' is not assignable to type 'string'.
   bad: (x) => x
 }
 ```
-ちなみに関数ではなく、通常の型に対して行うとnever型になる。
+ちなみに関数ではなく、通常の型に対して行うと`never`型になる。
 
 以下の記事参照。
 
