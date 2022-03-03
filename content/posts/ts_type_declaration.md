@@ -1,6 +1,6 @@
 ---
 title: "What's type declaration"
-date: 2022-03-04
+date: 2022-03-03
 tags: ["typescript"]
 ---
 ## 概要
