@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ruby on method_missing(*)</title>
+    <link>https://radish-miyazaki.github.io/tags/ruby/</link>
+    <description>Recent content in ruby on method_missing(*)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>2022 Radish All rights reserved</copyright>
+    <lastBuildDate>Fri, 18 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://radish-miyazaki.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ruby Null Object</title>
+      <link>https://radish-miyazaki.github.io/2022/02/18/ruby_null_object/</link>
+      <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://radish-miyazaki.github.io/2022/02/18/ruby_null_object/</guid>
+      <description>Null Objectとは Null Objectとは、「何もしないメソッド」を持つオブジェクトのこと。
+クラスベースのオブジェクト指向言語（Java, C#など）だと時折見かける。
+class Huga def huga &amp;#39;huga&amp;#39; end end class NullHuga def huga; end end class Hoge def process_huga(huga) # create_hugaはhuga or nullを返す設定 create_huga || NullHuga.new end end	Null Objectのメソッドを呼び出すと、エラーを出さずにメッセージをゴミ箱に捨ててくれる。</description>
+    </item>
+    
+  </channel>
+</rss>

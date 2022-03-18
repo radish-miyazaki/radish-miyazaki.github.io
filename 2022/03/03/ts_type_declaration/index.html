@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What&#39;s type declaration | method_missing(*)</title>
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/post.css" />
+  <script defer src="https://radish-miyazaki.github.io/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/common.css" />
+  <link rel="icon" type="image/png" href="https://radish-miyazaki.github.io/assets/icons/ruby.png" />
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://radish-miyazaki.github.io/post-cover.png"/>
+
+<meta name="twitter:title" content="What&#39;s type declaration"/>
+<meta name="twitter:description" content="概要 .d.tsファイルや その内部に記述されている処理を今までフィーリングで扱っていたので学びなおした。
+コードは一切出て来ないよ！
+ 型宣言とは ライブラリなどでよく見かける「.d.ts」という拡張子を持つファイル や スクリプトモードのファイル（.tsファイル） に存在している宣言。
+これはJSDocアノテーションと同様、型付けされていないJavaScriptコードにTypeScriptの型を結びつけるための方法である。
+Definitely Typedでは様々なパッケージの型宣言ファイルが公開されている。
+ 通常のTypeScriptの構文の違い 通常のTypeScriptの構文とは少し異なる箇所がある。
+ 型宣言は型だけを含むことができ、値を含むことはできない  関数・クラス・オブジェクト・変数の実装を持つことはできず、パラメータのデフォルト値を持つことも出来ない。
+型宣言は、JavaScript内のどこかで定義される値が「存在する」ことは宣言できる  専用のキーワードdeclareを使う。
+型宣言は、利用者から見えるものについての型だけを宣言する  エクスポートされない型や、関数の本体内のローカル変数の型のようなものは含まない。
+ 型宣言ファイルの用途 型宣言ファイルは以下の用途で使われている。
+ どのような型が存在しているかTypeScriptに伝える  コンパイルされたTypeScriptを、ユーザがTypeScriptアプリケーションから使用する時に、 ユーザのTSCインスタンスは、生成されたJavaScriptファイルに対応する."/>
+
+  <meta property="og:title" content="What&#39;s type declaration" />
+<meta property="og:description" content="概要 .d.tsファイルや その内部に記述されている処理を今までフィーリングで扱っていたので学びなおした。
+コードは一切出て来ないよ！
+ 型宣言とは ライブラリなどでよく見かける「.d.ts」という拡張子を持つファイル や スクリプトモードのファイル（.tsファイル） に存在している宣言。
+これはJSDocアノテーションと同様、型付けされていないJavaScriptコードにTypeScriptの型を結びつけるための方法である。
+Definitely Typedでは様々なパッケージの型宣言ファイルが公開されている。
+ 通常のTypeScriptの構文の違い 通常のTypeScriptの構文とは少し異なる箇所がある。
+ 型宣言は型だけを含むことができ、値を含むことはできない  関数・クラス・オブジェクト・変数の実装を持つことはできず、パラメータのデフォルト値を持つことも出来ない。
+型宣言は、JavaScript内のどこかで定義される値が「存在する」ことは宣言できる  専用のキーワードdeclareを使う。
+型宣言は、利用者から見えるものについての型だけを宣言する  エクスポートされない型や、関数の本体内のローカル変数の型のようなものは含まない。
+ 型宣言ファイルの用途 型宣言ファイルは以下の用途で使われている。
+ どのような型が存在しているかTypeScriptに伝える  コンパイルされたTypeScriptを、ユーザがTypeScriptアプリケーションから使用する時に、 ユーザのTSCインスタンスは、生成されたJavaScriptファイルに対応する." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://radish-miyazaki.github.io/2022/03/03/ts_type_declaration/" /><meta property="og:image" content="https://radish-miyazaki.github.io/post-cover.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-03T00:00:00+00:00" />
+
+
+</head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="https://radish-miyazaki.github.io">method_missing(*)</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">What&#39;s type declaration</h2>
+          <small class="date">2022-03-03 (Thu)</small>
+          <div class="tags">
+            
+            <a href="https://radish-miyazaki.github.io/tags/typescript" class="tag">typescript</a>
+            
+          </div>
+        </div>
+        <div class="content"><h2 id="概要">概要</h2>
+<p><code>.d.tsファイル</code>や その内部に記述されている処理を今までフィーリングで扱っていたので学びなおした。</p>
+<p>コードは一切出て来ないよ！</p>
+<hr>
+<h2 id="型宣言とは">型宣言とは</h2>
+<p>ライブラリなどでよく見かける「<strong>.d.ts</strong>」という拡張子を持つファイル や <a href="https://typescriptbook.jp/reference/import-export-require#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A8%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB">スクリプトモード</a>のファイル（<strong>.ts</strong>ファイル） に存在している宣言。</p>
+<p>これは<a href="https://www.typescriptlang.org/ja/docs/handbook/jsdoc-supported-types.html">JSDocアノテーション</a>と同様、<strong>型付けされていないJavaScriptコードにTypeScriptの型を結びつける</strong>ための方法である。</p>
+<p><a href="http://definitelytyped.org/">Definitely Typed</a>では様々なパッケージの型宣言ファイルが公開されている。</p>
+<hr>
+<h2 id="通常のtypescriptの構文の違い">通常のTypeScriptの構文の違い</h2>
+<p>通常のTypeScriptの構文とは少し異なる箇所がある。</p>
+<ol>
+<li>型宣言は型だけを含むことができ、値を含むことはできない</li>
+</ol>
+<p>関数・クラス・オブジェクト・変数の実装を持つことはできず、パラメータのデフォルト値を持つことも出来ない。</p>
+<ol start="2">
+<li>型宣言は、JavaScript内のどこかで定義される値が「存在する」ことは宣言できる</li>
+</ol>
+<p>専用のキーワード<code>declare</code>を使う。</p>
+<ol start="3">
+<li>型宣言は、利用者から見えるものについての型だけを宣言する</li>
+</ol>
+<p>エクスポートされない型や、関数の本体内のローカル変数の型のようなものは含まない。</p>
+<hr>
+<h2 id="型宣言ファイルの用途">型宣言ファイルの用途</h2>
+<p>型宣言ファイルは以下の用途で使われている。</p>
+<ol>
+<li>どのような型が存在しているかTypeScriptに伝える</li>
+</ol>
+<p>コンパイルされたTypeScriptを、ユーザがTypeScriptアプリケーションから使用する時に、
+ユーザのTSCインスタンスは、生成されたJavaScriptファイルに対応する.d.tsファイルを探す。</p>
+<ol start="2">
+<li>入力した時に有益な型のヒントを提示</li>
+</ol>
+<p>TypeScriptをサポートしているコードエディタは、.d.tsファイルを読み取っている。</p>
+<ol start="3">
+<li>TypeScriptをコンパイルして提供することで、コンパイル時間を短縮</li>
+</ol>
+<p>ビルド後のJavaScriptと型宣言ファイルを渡すことで、TypeScriptの不必要な再コンパイルを避けることができる。</p>
+<hr>
+<h2 id="アンビエント">アンビエント</h2>
+<p>型宣言について話すときには、値を含む通常の宣言とは区別するために、<strong>アンビエント</strong>と呼ぶことがある。</p>
+<p>アンビエントには、以下の種類が存在する。</p>
+<ol>
+<li><strong>アンビエント変数宣言</strong></li>
+</ol>
+<p>JavaScript内のどこかで定義されている<strong>グローバル変数（<code>process.env</code>など）についてTypeScriptに伝える</strong>。</p>
+<ol start="2">
+<li><strong>アンビエント型宣言</strong></li>
+</ol>
+<p>プロジェクト内の<strong>あらゆる場所でグローバルに利用できる型を宣言</strong>できる。</p>
+<ol start="3">
+<li><strong>アンビエントモジュール宣言</strong></li>
+</ol>
+<p><code>npm</code> や <code>yarn</code>を使ってインストールしたサードパーティモジュールについてTypeScriptに伝える。</p>
+<p>アンビエントの詳細については、別記事で触れる予定。</p>
+<p>文字ばっかりになってしまったので今日はここまで。</p>
+<hr>
+<h2 id="参考文献">参考文献</h2>
+<p><a href="https://www.oreilly.co.jp/books/9784873119045/">プログラミングTypeScript ――スケールするJavaScriptアプリケーション開発</a></p>
+<p><a href="https://typescript-jp.gitbook.io/deep-dive/type-system/intro">TypeScript Deep Dive ――アンビエント宣言(declare)</a></p>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2022 Radish All rights reserved. </p>
+</footer>
+    </main>
+  </body>
+</html>

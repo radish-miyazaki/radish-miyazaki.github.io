@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variance and TypeScript | method_missing(*)</title>
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/post.css" />
+  <script defer src="https://radish-miyazaki.github.io/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/common.css" />
+  <link rel="icon" type="image/png" href="https://radish-miyazaki.github.io/assets/icons/ruby.png" />
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://radish-miyazaki.github.io/post-cover.png"/>
+
+<meta name="twitter:title" content="Variance and TypeScript"/>
+<meta name="twitter:description" content="概要 型について理解を深める上で必要不可欠となる変性（Variance）をTypescriptを通して学んだので、まとめておく。
+ サブタイプとスーパータイプ まずは変性について学ぶ上で、知っておくべき基本的な用語から触れていく。
+サブタイプ A, Bという2つの型があり、BがAのサブタイプである場合、Aが要求されているところはどこでも、Bを安全に使うことができる。
+TypeScriptによる例を以下に示す。
+ 配列はオブジェクトのサブタイプ タプルは配列のサブタイプ 全ての値はanyのサブタイプ neverは全ての値のサブタイプ Animalを拡張するBirdというクラスがある場合、BirdはAnimalのサブタイプ  スーパータイプ A, Bという2つの型があり、BがAのスーパータイプである場合、Bが要求されているところ はどこでも、Aを安全に使うことができる。
+TypeScriptによる例を以下に示す。
+ オブジェクトは配列のスーパータイプ 配列はタプルのスーパータイプ anyは全ての値のスーパータイプ すべての値はneverのスーパータイプ AnimalはBirdのスーパータイプ   変性とは 型同士の関係性（型Aを指定したときに、そのサブタイプである型Bを当てはめられるかどうか）を判別するルールは、プログラム言語間で大きな相違点となっている。"/>
+
+  <meta property="og:title" content="Variance and TypeScript" />
+<meta property="og:description" content="概要 型について理解を深める上で必要不可欠となる変性（Variance）をTypescriptを通して学んだので、まとめておく。
+ サブタイプとスーパータイプ まずは変性について学ぶ上で、知っておくべき基本的な用語から触れていく。
+サブタイプ A, Bという2つの型があり、BがAのサブタイプである場合、Aが要求されているところはどこでも、Bを安全に使うことができる。
+TypeScriptによる例を以下に示す。
+ 配列はオブジェクトのサブタイプ タプルは配列のサブタイプ 全ての値はanyのサブタイプ neverは全ての値のサブタイプ Animalを拡張するBirdというクラスがある場合、BirdはAnimalのサブタイプ  スーパータイプ A, Bという2つの型があり、BがAのスーパータイプである場合、Bが要求されているところ はどこでも、Aを安全に使うことができる。
+TypeScriptによる例を以下に示す。
+ オブジェクトは配列のスーパータイプ 配列はタプルのスーパータイプ anyは全ての値のスーパータイプ すべての値はneverのスーパータイプ AnimalはBirdのスーパータイプ   変性とは 型同士の関係性（型Aを指定したときに、そのサブタイプである型Bを当てはめられるかどうか）を判別するルールは、プログラム言語間で大きな相違点となっている。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://radish-miyazaki.github.io/2022/03/17/covariance_and_typescript/" /><meta property="og:image" content="https://radish-miyazaki.github.io/post-cover.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-17T00:00:00+00:00" />
+
+
+</head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="https://radish-miyazaki.github.io">method_missing(*)</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Variance and TypeScript</h2>
+          <small class="date">2022-03-17 (Thu)</small>
+          <div class="tags">
+            
+            <a href="https://radish-miyazaki.github.io/tags/typescript" class="tag">typescript</a>
+            
+          </div>
+        </div>
+        <div class="content"><h2 id="概要">概要</h2>
+<p>型について理解を深める上で必要不可欠となる変性（Variance）をTypescriptを通して学んだので、まとめておく。</p>
+<hr>
+<h2 id="サブタイプとスーパータイプ">サブタイプとスーパータイプ</h2>
+<p>まずは変性について学ぶ上で、知っておくべき基本的な用語から触れていく。</p>
+<h3 id="サブタイプ">サブタイプ</h3>
+<p>A, Bという2つの型があり、BがAのサブタイプである場合、<strong>Aが要求されているところ</strong>はどこでも、<strong>Bを安全に使うことができる</strong>。</p>
+<p>TypeScriptによる例を以下に示す。</p>
+<ul>
+<li>配列はオブジェクトのサブタイプ</li>
+<li>タプルは配列のサブタイプ</li>
+<li>全ての値は<code>any</code>のサブタイプ</li>
+<li><code>never</code>は全ての値のサブタイプ</li>
+<li><code>Animal</code>を拡張する<code>Bird</code>というクラスがある場合、<code>Bird</code>は<code>Animal</code>のサブタイプ</li>
+</ul>
+<h3 id="スーパータイプ">スーパータイプ</h3>
+<p>A, Bという2つの型があり、BがAのスーパータイプである場合、<strong>Bが要求されているところ</strong>
+はどこでも、<strong>Aを安全に使うことができる。</strong></p>
+<p>TypeScriptによる例を以下に示す。</p>
+<ul>
+<li>オブジェクトは配列のスーパータイプ</li>
+<li>配列はタプルのスーパータイプ</li>
+<li><code>any</code>は全ての値のスーパータイプ</li>
+<li>すべての値は<code>never</code>のスーパータイプ</li>
+<li><code>Animal</code>は<code>Bird</code>のスーパータイプ</li>
+</ul>
+<hr>
+<h2 id="変性とは">変性とは</h2>
+<p>型同士の関係性（型Aを指定したときに、そのサブタイプである型Bを当てはめられるかどうか）を判別するルールは、<strong>プログラム言語間で大きな相違点となっている</strong>。</p>
+<p>このようなルールを一般的に指す言葉が<strong>変性</strong>であり、以下の<strong>4種類</strong>に分けられる。</p>
+<h3 id="不変性">不変性</h3>
+<p>Tそのものを必要とする。</p>
+<h3 id="共変性">共変性</h3>
+<p><code>&lt;:T</code>であるものを必要とする、つまり<strong>Tそのもの</strong>あるいは<strong>Tのサブタイプ</strong>を必要とする。</p>
+<h3 id="反変性">反変性</h3>
+<p><code>&gt;:T</code>であるものを必要とする、つまり<strong>Tそのもの</strong>あるいは<strong>Tのスーパータイプ</strong>を必要とする。</p>
+<h3 id="双変性">双変性</h3>
+<p><code>&lt;:T</code> または <code>&gt;:T</code>のどちらかを必要とする、つまり<strong>Tそのもの</strong>あるいは<strong>Tのサブタイプ</strong>、もしくは<strong>スーパータイプ</strong>を必要とする。</p>
+<hr>
+<h2 id="typescriptにおける変性">TypeScriptにおける変性</h2>
+<p>TypeScriptでは、オブジェクト、クラス、配列、関数の戻り値の型のような複雑な型はすべて、そのメンバーに対して<strong>共変</strong>である。</p>
+<p>以下に共変であることの例を示す。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Animal</span> {}
+
+<span style="color:#75715e">// Animalのサブクラス
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bird</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Animal</span> {
+  <span style="color:#a6e22e">chirp() {</span>}
+}
+
+<span style="color:#75715e">// Birdのサブクラス
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Crow</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Bird</span> {
+  <span style="color:#a6e22e">caw() {</span>}
+}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">generate</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">f</span><span style="color:#f92672">:</span> () <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">Bird</span>) <span style="color:#f92672">=&gt;</span> {
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#75715e">// Animalはgenerateで受け取る関数の戻り値の型のスーパータイプなのでNG
+</span><span style="color:#75715e">// Error: Argument of type &#39;() =&gt; Animal&#39; is not assignable to parameter of type &#39;() =&gt; Bird&#39;.
+</span><span style="color:#75715e">// Property &#39;chirp&#39; is missing in type &#39;Animal&#39; but required in type &#39;Bird&#39;.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">toAnimal</span> <span style="color:#f92672">=</span> ()<span style="color:#f92672">:</span> <span style="color:#a6e22e">Animal</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Animal</span>
+<span style="color:#a6e22e">generate</span>(<span style="color:#a6e22e">toAnimal</span>)
+
+<span style="color:#75715e">// Birdはgenerateで受け取る関数の戻り値の型と同一なのでOK
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">toBird</span> <span style="color:#f92672">=</span> ()<span style="color:#f92672">:</span> <span style="color:#a6e22e">Bird</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Bird</span>
+<span style="color:#a6e22e">generate</span>(<span style="color:#a6e22e">toBird</span>)
+
+<span style="color:#75715e">// Crowはgenerateで受け取る関数の戻り値の型のサブタイプなのでOK
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">toCrow</span> <span style="color:#f92672">=</span> ()<span style="color:#f92672">:</span> <span style="color:#a6e22e">Crow</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Crow</span>
+<span style="color:#a6e22e">generate</span>(<span style="color:#a6e22e">toCrow</span>)
+</code></pre></div><p>ただし一つだけ例外が存在し、それは<strong>関数のパラメータの型</strong>。</p>
+<p><code>strictFunctionTypes</code>がオンの場合、関数のパラメータの型は共変ではなく<strong>反変</strong>、つまりサブタイプの場合はコンパイルエラーが起きる。</p>
+<p>以下に例を示す。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">clone</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">f</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">b</span>: <span style="color:#66d9ef">Bird</span>) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">Bird</span>) <span style="color:#f92672">=&gt;</span> {
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#75715e">// a: Animal はcloneの引数の関数パラメータ型 b: Bird のスーパータイプなのでOK
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">animalToBird</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">a</span>: <span style="color:#66d9ef">Animal</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Bird</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Bird</span>
+<span style="color:#a6e22e">clone</span>(<span style="color:#a6e22e">animalToBird</span>)
+
+<span style="color:#75715e">// b: Bird はcloneの引数の関数パラメータ型 b: Bird と同一なのでOK
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">birdToBird</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">b</span>: <span style="color:#66d9ef">Bird</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Bird</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">b</span>
+<span style="color:#a6e22e">clone</span>(<span style="color:#a6e22e">birdToBird</span>)
+
+<span style="color:#75715e">// c: Crow はcloneの引数の関数パラメータ型 b: Bird のサブタイプなのでNG
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">crowToBird</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">c</span>: <span style="color:#66d9ef">Crow</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Bird</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Crow</span>
+<span style="color:#75715e">// Error: Argument of type &#39;(c: Crow) =&gt; Bird&#39; is not assignable to parameter of type &#39;(b: Bird) =&gt; Bird&#39;.
+</span><span style="color:#75715e">// Types of parameters &#39;c&#39; and &#39;b&#39; are incompatible.
+</span><span style="color:#75715e">// Property &#39;caw&#39; is missing in type &#39;Bird&#39; but required in type &#39;Crow&#39;.
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">clone</span>(<span style="color:#a6e22e">crowToBird</span>)
+</code></pre></div><p><code>strictFunctionTypes</code>がオフの場合は<strong>双変</strong>、つまり上記のコードは全て通るようになる。</p>
+<hr>
+<h2 id="まとめ">まとめ</h2>
+<p>上記のことは覚えておいてもよいが、なかなか難しいと思われる（少なくとも私は無理）。</p>
+<p>なのでワードだけ頭の片隅に入れておき、誤った型付けをしてIDEに怒られた際に「こんなのあったな〜」と思い出して調べることで原因特定の材料とすれば良い。</p>
+<hr>
+<h2 id="参考文献">参考文献</h2>
+<ul>
+<li><a href="https://www.oreilly.co.jp/books/9784873119045/">プログラミングTypeScript ――スケールするJavaScriptアプリケーション開発</a></li>
+<li><a href="https://numb86-tech.hatenablog.com/entry/2020/07/04/095737">30歳からのプログラミング ――TypeScript における変性（variance）について</a></li>
+<li><a href="https://typescript-jp.gitbook.io/deep-dive/type-system/type-compatibility">TypeScript Deep Dive ――型の互換性</a></li>
+</ul>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2022 Radish All rights reserved. </p>
+</footer>
+    </main>
+  </body>
+</html>

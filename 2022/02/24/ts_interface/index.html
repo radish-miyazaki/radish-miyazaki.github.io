@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Type alias vs Interface | method_missing(*)</title>
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/post.css" />
+  <script defer src="https://radish-miyazaki.github.io/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/common.css" />
+  <link rel="icon" type="image/png" href="https://radish-miyazaki.github.io/assets/icons/ruby.png" />
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://radish-miyazaki.github.io/post-cover.png"/>
+
+<meta name="twitter:title" content="Type alias vs Interface"/>
+<meta name="twitter:description" content="概要 社内で「TypeScriptの インタフェース と 型エイリアス の違いが上手くわからない！」 という声が上がっていたので、まとめておく。
+同じところを認識したうえで、違う箇所を見たほうが頭に残るかなということで、両方見ていこう。 まずは、同じところから。
+ 同じところ 型エイリアスを使っている箇所はどこでも、インタフェースを使うことができる。
+どちらの宣言も形状を定義しており、それらの形状は互いに割り当てが可能。
+// 型エイリアス type Sushi = { calories: number salty: boolean tasty: boolean } // インタフェース interface Sushi { calories: number salty: boolean tasty: boolean } 更にどちらも型を組み合わせることもできる。まずは型エイリアスから見てみる。"/>
+
+  <meta property="og:title" content="Type alias vs Interface" />
+<meta property="og:description" content="概要 社内で「TypeScriptの インタフェース と 型エイリアス の違いが上手くわからない！」 という声が上がっていたので、まとめておく。
+同じところを認識したうえで、違う箇所を見たほうが頭に残るかなということで、両方見ていこう。 まずは、同じところから。
+ 同じところ 型エイリアスを使っている箇所はどこでも、インタフェースを使うことができる。
+どちらの宣言も形状を定義しており、それらの形状は互いに割り当てが可能。
+// 型エイリアス type Sushi = { calories: number salty: boolean tasty: boolean } // インタフェース interface Sushi { calories: number salty: boolean tasty: boolean } 更にどちらも型を組み合わせることもできる。まずは型エイリアスから見てみる。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://radish-miyazaki.github.io/2022/02/24/ts_interface/" /><meta property="og:image" content="https://radish-miyazaki.github.io/post-cover.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-24T00:00:00+00:00" />
+
+
+</head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="https://radish-miyazaki.github.io">method_missing(*)</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Type alias vs Interface</h2>
+          <small class="date">2022-02-24 (Thu)</small>
+          <div class="tags">
+            
+            <a href="https://radish-miyazaki.github.io/tags/typescript" class="tag">typescript</a>
+            
+          </div>
+        </div>
+        <div class="content"><h2 id="概要">概要</h2>
+<p>社内で「TypeScriptの <strong>インタフェース</strong> と <strong>型エイリアス</strong> の違いが上手くわからない！」 という声が上がっていたので、まとめておく。</p>
+<p>同じところを認識したうえで、違う箇所を見たほうが頭に残るかなということで、両方見ていこう。
+まずは、同じところから。</p>
+<hr>
+<h2 id="同じところ">同じところ</h2>
+<p>型エイリアスを使っている箇所はどこでも、インタフェースを使うことができる。</p>
+<p>どちらの宣言も形状を定義しており、それらの形状は互いに割り当てが可能。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#75715e">// 型エイリアス
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Sushi</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">calories</span>: <span style="color:#66d9ef">number</span>
+	<span style="color:#a6e22e">salty</span>: <span style="color:#66d9ef">boolean</span>
+	<span style="color:#a6e22e">tasty</span>: <span style="color:#66d9ef">boolean</span>
+}
+
+<span style="color:#75715e">// インタフェース
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Sushi</span> {
+	<span style="color:#a6e22e">calories</span>: <span style="color:#66d9ef">number</span>
+	<span style="color:#a6e22e">salty</span>: <span style="color:#66d9ef">boolean</span>
+	<span style="color:#a6e22e">tasty</span>: <span style="color:#66d9ef">boolean</span>
+}
+</code></pre></div><p>更にどちらも<strong>型を組み合わせる</strong>こともできる。まずは型エイリアスから見てみる。</p>
+<p>型エイリアスの場合は、<code>&amp;</code>を用いて型を組み合わせる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Food</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">calories</span>: <span style="color:#66d9ef">number</span>
+	<span style="color:#a6e22e">tasty</span>: <span style="color:#66d9ef">boolean</span>
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Sushi</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Food</span> <span style="color:#f92672">&amp;</span> {
+	<span style="color:#a6e22e">salty</span>: <span style="color:#66d9ef">boolean</span>
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Cake</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Food</span> <span style="color:#f92672">&amp;</span> {
+	<span style="color:#a6e22e">sweet</span>: <span style="color:#66d9ef">boolean</span>
+}
+</code></pre></div><p>一方、ほとんど同じことをインタフェースでも実現可能。</p>
+<p>こちらは組み合わせるときに<code>extends</code>キーワードを使う。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Food</span> {
+	<span style="color:#a6e22e">calories</span>: <span style="color:#66d9ef">number</span>
+	<span style="color:#a6e22e">tasty</span>: <span style="color:#66d9ef">boolean</span>
+}
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Sushi</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Food</span> {
+	<span style="color:#a6e22e">salty</span>: <span style="color:#66d9ef">boolean</span>
+}
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Cake</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Food</span> {
+	<span style="color:#a6e22e">sweet</span>: <span style="color:#66d9ef">boolean</span>
+}
+</code></pre></div><hr>
+<h2 id="違うところ">違うところ</h2>
+<p>異なる箇所は大きく分けて3つ存在する。</p>
+<h3 id="1-型エイリアスのほう汎用的">1. 型エイリアスのほう汎用的</h3>
+<p>型エイリアスのほうが、<strong>右辺に任意の型を指定</strong>でき、より汎用的である。</p>
+<p>型エイリアスの右辺には、型の式（<strong>型と「</strong><code>&amp;</code><strong>」や「</strong><code>|</code><strong>」のような型演算子</strong>）を指定することもできる。</p>
+<p>一方、インタフェースの場合は、<strong>右辺は形状</strong>でなければならない。例えば、以下のような型エイリアスはインタフェースに書き換えられない。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">A</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">number</span>
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">B</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">A</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">string</span>
+</code></pre></div><h3 id="2-インタフェースの拡張時のチェック">2. インタフェースの拡張時のチェック</h3>
+<p>インタフェースを拡張する場合、<strong>拡張元のインタフェースが拡張先のインタフェースに割り当て可能か</strong>TypeScriptが確認する点。</p>
+<p>たとえば、次のようなチェックを行う。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">A</span> {
+  <span style="color:#a6e22e">good</span>(<span style="color:#a6e22e">x</span>: <span style="color:#66d9ef">number</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+  <span style="color:#a6e22e">bad</span>(<span style="color:#a6e22e">x</span>: <span style="color:#66d9ef">number</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#75715e">// Error: 
+</span><span style="color:#75715e">// Interface &#39;B&#39; incorrectly extends interface &#39;A&#39;.
+</span><span style="color:#75715e">// Types of property &#39;bad&#39; are incompatible.
+</span><span style="color:#75715e">// Type &#39;(x: string) =&gt; string&#39; is not assignable to type &#39;(x: number) =&gt; string&#39;.
+</span><span style="color:#75715e">// Types of parameters &#39;x&#39; and &#39;x&#39; are incompatible.
+</span><span style="color:#75715e">// Type &#39;number&#39; is not assignable to type &#39;string&#39;.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">B</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">A</span> {
+  <span style="color:#a6e22e">good</span>(<span style="color:#a6e22e">x</span>: <span style="color:#66d9ef">string</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">number</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+  <span style="color:#a6e22e">bad</span>(<span style="color:#a6e22e">x</span>: <span style="color:#66d9ef">string</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+}
+</code></pre></div><p>交差型を使う場合は、これとは異なる挙動をする。</p>
+<p>最後の例のインタフェースを型エイリアスに変換して、<code>extends</code>を交差（<code>&amp;</code>）に変えると、TypeScriptは<strong>拡張元の拡張先の型を結合</strong>し、<code>bad</code>の<strong>オーバーロードされたシグネチャを作成</strong>し、コンパイル時のエラーを回避する。</p>
+<p>したがって、下記の場合はエラーになる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">b</span>: <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">good</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">x</span>) <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>,
+  <span style="color:#75715e">// Error: Type &#39;string | number&#39; is not assignable to type &#39;string&#39;.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Type &#39;number&#39; is not assignable to type &#39;string&#39;.
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">bad</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">x</span>) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">x</span>
+}
+</code></pre></div><p>ちなみに関数ではなく、通常の型に対して行うと<code>never</code>型になる。</p>
+<p>以下の記事参照。</p>
+<p><a href="https://typescriptbook.jp/reference/object-oriented/interface/interface-vs-type-alias#%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89">サバイバルTypeScript interfaceとtypeの違い</a></p>
+<h3 id="3-宣言のマージ">3. 宣言のマージ</h3>
+<p>同じスコープ内に<strong>同名のインタフェース</strong>が存在した場合、それらは<strong>自動的にマージ</strong>される。</p>
+<p>これを「<strong>宣言のマージ</strong>」と呼ぶ。</p>
+<p>型エイリアスの場合は、コンパイルエラーになる。</p>
+<p>宣言のマージはTypeScriptの特徴的な機能の1つなので、また別に記事を作成予定。</p>
+<h2 id="参考文献">参考文献</h2>
+<p><a href="https://www.oreilly.co.jp/books/9784873119045/">プログラミングTypeScript ――スケールするJavaScriptアプリケーション開発</a></p>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2022 Radish All rights reserved. </p>
+</footer>
+    </main>
+  </body>
+</html>
