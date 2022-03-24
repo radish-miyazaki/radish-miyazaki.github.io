@@ -59,7 +59,8 @@ fn main() {
 fn main() {
     let arr = [0; 3];
     
-    // Error: index out of bounds: the length is 3 but the index is 100
+    // Error: index out of bounds: the length is 3 
+    // but the index is 100
     arr[100]; 
 }
 ```
