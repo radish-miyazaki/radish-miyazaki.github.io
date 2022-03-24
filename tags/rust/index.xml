@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rust on method_missing(*)</title>
+    <link>https://radish-miyazaki.github.io/tags/rust/</link>
+    <description>Recent content in rust on method_missing(*)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>2022 Radish All rights reserved</copyright>
+    <lastBuildDate>Thu, 24 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://radish-miyazaki.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Array vs Slice vs Vector</title>
+      <link>https://radish-miyazaki.github.io/2022/03/24/array_slice_vec/</link>
+      <pubDate>Thu, 24 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://radish-miyazaki.github.io/2022/03/24/array_slice_vec/</guid>
+      <description>概要 以前Rustを学習していたが、業務で新しい言語を学ぶ必要が出てきたので、一時中断していた。
+最近Rustに入門し直したので、その時に出てきた配列とスライスとベクタの違いを備忘録として書き留める。
+ 配列 ([T; n]) 配列は固定長で、同一型を格納するリストである。
+配列内の要素を入れ替えることはできるが、サイズは変更できない。
+fn main() { let mut arr = [3, 5, 1, 2, 4]; arr.sort(); println!(&amp;#34;{:?}&amp;#34;, arr) // [1, 2, 3, 4, 5]  // Error: method not found in `[{integer}; 5]`  arr.</description>
+    </item>
+    
+  </channel>
+</rss>

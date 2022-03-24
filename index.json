@@ -11,6 +11,16 @@
   
   
     {
+      "id": "https://radish-miyazaki.github.io/2022/03/24/array_slice_vec/",
+      "title": "Array vs Slice vs Vector",
+      "content_text": "概要 以前Rustを学習していたが、業務で新しい言語を学ぶ必要が出てきたので、一時中断していた。\n最近Rustに入門し直したので、その時に出てきた配列とスライスとベクタの違いを備忘録として書き留める。\n 配列 ([T; n]) 配列は固定長で、同一型を格納するリストである。\n配列内の要素を入れ替えることはできるが、サイズは変更できない。\nfn main() { let mut arr = [3, 5, 1, 2, 4]; arr.sort(); println!(\u0026#34;{:?}\u0026#34;, arr) // [1, 2, 3, 4, 5]  // Error: method not found in `[{integer}; 5]`  arr.",
+      "url": "https://radish-miyazaki.github.io/2022/03/24/array_slice_vec/",
+      "date_published": "2022-03-24 00:00:00 +0000 UTC",
+      "tags": ["rust"]
+    }
+  
+  , 
+    {
       "id": "https://radish-miyazaki.github.io/2022/03/17/covariance_and_typescript/",
       "title": "Variance and TypeScript",
       "content_text": "概要 型について理解を深める上で必要不可欠となる変性（Variance）をTypescriptを通して学んだので、まとめておく。\n サブタイプとスーパータイプ まずは変性について学ぶ上で、知っておくべき基本的な用語から触れていく。\nサブタイプ A, Bという2つの型があり、BがAのサブタイプである場合、Aが要求されているところはどこでも、Bを安全に使うことができる。\nTypeScriptによる例を以下に示す。\n 配列はオブジェクトのサブタイプ タプルは配列のサブタイプ 全ての値はanyのサブタイプ neverは全ての値のサブタイプ Animalを拡張するBirdというクラスがある場合、BirdはAnimalのサブタイプ  スーパータイプ A, Bという2つの型があり、BがAのスーパータイプである場合、Bが要求されているところ はどこでも、Aを安全に使うことができる。\nTypeScriptによる例を以下に示す。\n オブジェクトは配列のスーパータイプ 配列はタプルのスーパータイプ anyは全ての値のスーパータイプ すべての値はneverのスーパータイプ AnimalはBirdのスーパータイプ   変性とは 型同士の関係性（型Aを指定したときに、そのサブタイプである型Bを当てはめられるかどうか）を判別するルールは、プログラム言語間で大きな相違点となっている。",

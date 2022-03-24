@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Array vs Slice vs Vector | method_missing(*)</title>
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/post.css" />
+  <script defer src="https://radish-miyazaki.github.io/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/common.css" />
+  <link rel="icon" type="image/png" href="https://radish-miyazaki.github.io/assets/icons/ruby.png" />
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://radish-miyazaki.github.io/post-cover.png"/>
+
+<meta name="twitter:title" content="Array vs Slice vs Vector"/>
+<meta name="twitter:description" content="概要 以前Rustを学習していたが、業務で新しい言語を学ぶ必要が出てきたので、一時中断していた。
+最近Rustに入門し直したので、その時に出てきた配列とスライスとベクタの違いを備忘録として書き留める。
+ 配列 ([T; n]) 配列は固定長で、同一型を格納するリストである。
+配列内の要素を入れ替えることはできるが、サイズは変更できない。
+fn main() { let mut arr = [3, 5, 1, 2, 4]; arr.sort(); println!(&#34;{:?}&#34;, arr) // [1, 2, 3, 4, 5]  // Error: method not found in `[{integer}; 5]`  arr."/>
+
+  <meta property="og:title" content="Array vs Slice vs Vector" />
+<meta property="og:description" content="概要 以前Rustを学習していたが、業務で新しい言語を学ぶ必要が出てきたので、一時中断していた。
+最近Rustに入門し直したので、その時に出てきた配列とスライスとベクタの違いを備忘録として書き留める。
+ 配列 ([T; n]) 配列は固定長で、同一型を格納するリストである。
+配列内の要素を入れ替えることはできるが、サイズは変更できない。
+fn main() { let mut arr = [3, 5, 1, 2, 4]; arr.sort(); println!(&#34;{:?}&#34;, arr) // [1, 2, 3, 4, 5]  // Error: method not found in `[{integer}; 5]`  arr." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://radish-miyazaki.github.io/2022/03/24/array_slice_vec/" /><meta property="og:image" content="https://radish-miyazaki.github.io/post-cover.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-24T00:00:00+00:00" />
+
+
+</head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="https://radish-miyazaki.github.io">method_missing(*)</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Array vs Slice vs Vector</h2>
+          <small class="date">2022-03-24 (Thu)</small>
+          <div class="tags">
+            
+            <a href="https://radish-miyazaki.github.io/tags/rust" class="tag">rust</a>
+            
+          </div>
+        </div>
+        <div class="content"><h2 id="概要">概要</h2>
+<p>以前Rustを学習していたが、業務で新しい言語を学ぶ必要が出てきたので、一時中断していた。</p>
+<p>最近Rustに入門し直したので、その時に出てきた配列とスライスとベクタの違いを備忘録として書き留める。</p>
+<hr>
+<h2 id="配列-t-n">配列 (<code>[T; n]</code>)</h2>
+<p>配列は<strong>固定長</strong>で、同一型を格納するリストである。</p>
+<p>配列内の要素を入れ替えることはできるが、サイズは変更できない。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> arr <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>];
+    arr.sort();
+   
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{:?}&#34;</span>, arr) <span style="color:#75715e">// [1, 2, 3, 4, 5]
+</span><span style="color:#75715e"></span>    
+    <span style="color:#75715e">// Error: method not found in `[{integer}; 5]`
+</span><span style="color:#75715e"></span>    arr.push(<span style="color:#ae81ff">6</span>); 
+   
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{:?}&#34;</span>, arr)
+}
+</code></pre></div><p>実装する場合は、<code>[1, 2, 3]</code> または <code>[T; n]</code>(Tは値、nは要素数)で記述する。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> arr1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>];
+    <span style="color:#66d9ef">let</span> arr2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">3</span>];
+   
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{:?} {:?}&#34;</span>, arr1, arr2) <span style="color:#75715e">// [1, 2, 3] [0, 0, 0]
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>配列では、要素内の型が同じであっても、<strong>要素数が異なれば別の型</strong>と判断される。</p>
+<p>つまり、<code>[0; 3]</code> と <code>[0; 4]</code> は別の型扱いされる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">type_of</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(_: <span style="color:#a6e22e">T</span>) {
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{}&#34;</span>, std::any::type_name::<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>());
+}
+
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> arr1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">3</span>];
+    <span style="color:#66d9ef">let</span> arr2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">4</span>];
+   
+    type_of(arr1); <span style="color:#75715e">// [i32; 3]
+</span><span style="color:#75715e"></span>    type_of(arr2); <span style="color:#75715e">// [i32; 4]
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>境界チェックが行われるので、境界外のインデックス値を指定すると、<code>panic</code>を起こす。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> arr <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">3</span>];
+    
+    <span style="color:#75715e">// Error: index out of bounds: the length is 3 but the index is 100
+</span><span style="color:#75715e"></span>    arr[<span style="color:#ae81ff">100</span>]; 
+}
+</code></pre></div><hr>
+<h2 id="ベクタvect">ベクタ（<code>Vec&lt;T&gt;</code>）</h2>
+<p><code>vec!</code>マクロや<code>Vec::new()</code>などを用いて生成できる。</p>
+<p>配列 と異なり、ヒープメモリに確保される値で<strong>拡大・縮小が可能</strong>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> v <span style="color:#f92672">=</span> vec<span style="color:#f92672">!</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>);
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{:?}&#34;</span>, v); <span style="color:#75715e">// [1, 2, 3]
+</span><span style="color:#75715e"></span>    
+    v.push(<span style="color:#ae81ff">4</span>);
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{:?}&#34;</span>, v); <span style="color:#75715e">// [1, 2, 3, 4]
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>型は<code>alloc::vec::Vec&lt;T&gt;</code>(Tは任意の型)。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> vec <span style="color:#f92672">=</span> vec<span style="color:#f92672">!</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>];
+    type_of(vec); <span style="color:#75715e">// alloc::vec::Vec&lt;i32&gt;
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>境界チェックが行われず、境界外のインデックス値を指定してもエラーは起きない。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> vec <span style="color:#f92672">=</span> vec<span style="color:#f92672">!</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>);
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{}&#34;</span>, vec[<span style="color:#ae81ff">1000000</span>]);
+}
+</code></pre></div><p>要素へのアクセスなど、基本的な操作は配列と同じ。</p>
+<hr>
+<h2 id="スライスt">スライス（<code>[T]</code>）</h2>
+<p>配列とは異なり、<strong>サイズは動的</strong>（コンパイル時に不明）だが、<strong>拡大・縮小することは出来ない</strong>。</p>
+<p>配列やベクタなどの<strong>存在する位置を指す</strong>ために用いられ、両者の参照は型強制によってスライスの参照にすることができる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> s: <span style="color:#66d9ef">&amp;</span>[<span style="color:#66d9ef">i32</span>];
+
+    <span style="color:#66d9ef">let</span> arr <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>];
+    s <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>arr;
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{:?}&#34;</span>, s); <span style="color:#75715e">// [1, 2, 3]
+</span><span style="color:#75715e"></span>    type_of(s); <span style="color:#75715e">// &amp;[i32]
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">let</span> vec <span style="color:#f92672">=</span> vec<span style="color:#f92672">!</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>];
+    s <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>vec;
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{:?}&#34;</span>, s); <span style="color:#75715e">// [1, 2, 3]
+</span><span style="color:#75715e"></span>    type_of(s); <span style="color:#75715e">// &amp;[i32]
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>この特性を用いると、<strong>引数に（構成要素の型が同じ）配列とベクタのどちらでも受け取ることができる</strong>関数を実装できる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">print_slice</span>(s: <span style="color:#66d9ef">&amp;</span>[<span style="color:#66d9ef">i32</span>]) {
+    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;{:?}&#34;</span>, s)
+}
+
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    print_slice(<span style="color:#f92672">&amp;</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]);
+    print_slice(<span style="color:#f92672">&amp;</span>vec<span style="color:#f92672">!</span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>));
+}
+</code></pre></div><p>サイズが動的で、そのままでは変数に格納することができないので、一般的に<strong>参照</strong>(<code>&amp;[T]</code>)を用いて扱う。このため、スライスの参照も含めて「スライス」と呼ばれる。</p>
+<p>参照を用いると、その値は<strong>スライスの最初の要素を指すポインタ</strong>と<strong>スライスの長さ</strong>という2つの<code>usize</code>要素で構成される。</p>
+<p>このような構造を<strong>ファットポインタ</strong>と呼ぶ。</p>
+<p>また、境界チェックが行われるので、境界外のインデックス値を指定すると、<code>panic</code>を起こす。</p>
+<h2 id="まとめ">まとめ</h2>
+<p><code>Go</code>を以前に触っていたので、スライスの意味合いが大分違って苦戦した…</p>
+<p>だいぶ省略してしまった &amp; 自分の理解がまだまだなので、Twitter等で「ここ違うよ！」とか「これも足したほうが良いよ！」などアドバイスをいただけますと助かります🙇</p>
+<h2 id="参考資料">参考資料</h2>
+<ul>
+<li><a href="https://doc.rust-jp.rs/rust-by-example-ja/primitives/array.html">Rust By Example &ndash;配列とスライス</a></li>
+<li><a href="https://doc.rust-jp.rs/book-ja/ch04-03-slices.html">The Rust Programming Language &ndash;スライス型</a></li>
+<li><a href="https://doc.rust-jp.rs/book-ja/ch08-01-vectors.html">The Rust Programming Language &ndash;ベクタで値のリストを保持する</a></li>
+<li><a href="https://www.shuwasystem.co.jp/book/9784798061702.html">実践Rustプログラミング入門</a></li>
+</ul>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2022 Radish All rights reserved. </p>
+</footer>
+    </main>
+  </body>
+</html>
