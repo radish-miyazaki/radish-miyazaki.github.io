@@ -79,13 +79,17 @@ if Rails." />
 <h3 id="redisインスタンスの初期設定">Redisインスタンスの初期設定</h3>
 <p><code>config/initializers</code>ディレクトリ直下に、<code>redis.rb</code>ファイルを作成し、Redisインスタンスの設定を追加。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>env<span style="color:#f92672">.</span>production?
-  $redis <span style="color:#f92672">=</span> <span style="color:#66d9ef">Redis</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">url</span>: <span style="color:#66d9ef">ENV</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#34;REDIS_URL&#34;</span><span style="color:#f92672">]</span>, <span style="color:#e6db74">ssl_params</span>: { <span style="color:#e6db74">verify_mode</span>: <span style="color:#66d9ef">OpenSSL</span><span style="color:#f92672">::</span><span style="color:#66d9ef">SSL</span><span style="color:#f92672">::</span><span style="color:#66d9ef">VERIFY_NONE</span> })
+  $redis <span style="color:#f92672">=</span>
+    <span style="color:#66d9ef">Redis</span><span style="color:#f92672">.</span>new(
+      <span style="color:#e6db74">url</span>: <span style="color:#66d9ef">ENV</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#34;REDIS_URL&#34;</span><span style="color:#f92672">]</span>, 
+      <span style="color:#e6db74">ssl_params</span>: { <span style="color:#e6db74">verify_mode</span>: <span style="color:#66d9ef">OpenSSL</span><span style="color:#f92672">::</span><span style="color:#66d9ef">SSL</span><span style="color:#f92672">::</span><span style="color:#66d9ef">VERIFY_NONE</span> }
+    )
 <span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="action-cableの設定">Action Cableの設定</h3>
 <p><code>config/cable.yml</code>ファイル内にも、設定を追加。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">production</span>:
   <span style="color:#f92672">adapter</span>: <span style="color:#ae81ff">redis</span>
-  <span style="color:#f92672">url</span>: <span style="color:#ae81ff">&lt;%=ENV[&#39;REDIS_URL&#39;]%&gt;</span>
+  <span style="color:#f92672">url</span>: <span style="color:#ae81ff">&lt;%= ENV[&#39;REDIS_URL&#39;] %&gt;</span>
   <span style="color:#75715e"># ここから下を新しく追加</span>
   <span style="color:#f92672">ssl_params</span>:
     <span style="color:#f92672">verify_mode</span>: <span style="color:#ae81ff">&lt;%= OpenSSL::SSL::VERIFY_NONE %&gt;</span>
