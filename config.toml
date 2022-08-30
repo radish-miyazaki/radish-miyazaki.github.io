@@ -14,7 +14,7 @@ summaryLength = 30
   name = "radish"
 
 [permalinks]
-  posts = "/:year/:month/:day/:filename"
+  posts = "/:year/:random"
   pages = "/:slug"
 
 [taxonomies]
