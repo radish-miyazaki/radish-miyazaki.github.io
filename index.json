@@ -11,70 +11,70 @@
   
   
     {
-      "id": "https://radish-miyazaki.github.io/2022/7/",
+      "id": "https://radish-miyazaki.github.io/7/",
       "title": "Transition Heroku Redis from Hobby_Dev to Premium on ROR",
       "content_text": "概要 Heroku Dyno, PostgreSQL, Redisの無料プランが10月末日から廃止になるので、開発環境のRedisを有料プランに移行した。\nその際に少々ハマってしまったので、まとめておく。\n 開発環境  Rails: 6.1.1.4 Ruby: 2.7.5 Redis: 6.2.3   Hobby_Dev と Premiumの違い Hobby_DevではTLSの有無に関わらず接続が可能だが、PremiumでかつRedisのバージョンが6の場合は、TLS接続が必須となっている。\nただし、Heroku側で設定は自動で行ってくれているので、クライアント側ではSSLでの接続をオフにするように設定を追加するだけで良い。\n サーバ（Heroku）での対応 DashboardのAddons管理ページ（\u0026lt;アプリケーションのダッシュボード\u0026gt;/resources）から簡単にできるので省略。\n クライアント（Rails）での対応 Redisインスタンスの初期設定 config/initializersディレクトリ直下に、redis.rbファイルを作成し、Redisインスタンスの設定を追加。\nif Rails.",
-      "url": "https://radish-miyazaki.github.io/2022/7/",
+      "url": "https://radish-miyazaki.github.io/7/",
       "date_published": "2022-08-30 00:00:00 +0000 UTC",
       "tags": ["ruby,rails,heroku"]
     }
   
   , 
     {
-      "id": "https://radish-miyazaki.github.io/2022/6/",
+      "id": "https://radish-miyazaki.github.io/6/",
       "title": "Array vs Slice vs Vector",
       "content_text": "概要 以前Rustを学習していたが、業務で新しい言語を学ぶ必要が出てきたので、一時中断していた。\n最近Rustに入門し直したので、その時に出てきた配列とスライスとベクタの違いを備忘録として書き留める。\n 配列 ([T; n]) 配列は固定長で、同一型を格納するリストである。\n配列内の要素を入れ替えることはできるが、サイズは変更できない。\nfn main() { let mut arr = [3, 5, 1, 2, 4]; arr.sort(); println!(\u0026#34;{:?}\u0026#34;, arr) // [1, 2, 3, 4, 5]  // Error: method not found in `[{integer}; 5]`  arr.",
-      "url": "https://radish-miyazaki.github.io/2022/6/",
+      "url": "https://radish-miyazaki.github.io/6/",
       "date_published": "2022-03-24 00:00:00 +0000 UTC",
       "tags": ["rust"]
     }
   
   , 
     {
-      "id": "https://radish-miyazaki.github.io/2022/5/",
+      "id": "https://radish-miyazaki.github.io/5/",
       "title": "Variance and TypeScript",
       "content_text": "概要 型について理解を深める上で必要不可欠となる変性（Variance）をTypescriptを通して学んだので、まとめておく。\n サブタイプとスーパータイプ まずは変性について学ぶ上で、知っておくべき基本的な用語から触れていく。\nサブタイプ A, Bという2つの型があり、BがAのサブタイプである場合、Aが要求されているところはどこでも、Bを安全に使うことができる。\nTypeScriptによる例を以下に示す。\n 配列はオブジェクトのサブタイプ タプルは配列のサブタイプ 全ての値はanyのサブタイプ neverは全ての値のサブタイプ Animalを拡張するBirdというクラスがある場合、BirdはAnimalのサブタイプ  スーパータイプ A, Bという2つの型があり、BがAのスーパータイプである場合、Bが要求されているところ はどこでも、Aを安全に使うことができる。\nTypeScriptによる例を以下に示す。\n オブジェクトは配列のスーパータイプ 配列はタプルのスーパータイプ anyは全ての値のスーパータイプ すべての値はneverのスーパータイプ AnimalはBirdのスーパータイプ   変性とは 型同士の関係性（型Aを指定したときに、そのサブタイプである型Bを当てはめられるかどうか）を判別するルールは、プログラム言語間で大きな相違点となっている。",
-      "url": "https://radish-miyazaki.github.io/2022/5/",
+      "url": "https://radish-miyazaki.github.io/5/",
       "date_published": "2022-03-17 00:00:00 +0000 UTC",
       "tags": ["typescript"]
     }
   
   , 
     {
-      "id": "https://radish-miyazaki.github.io/2022/4/",
+      "id": "https://radish-miyazaki.github.io/4/",
       "title": "Map type & Utility",
       "content_text": "概要 前回の社内勉強会でMap型が話題に上がり、自分の復習のためにまとめる。\nマップ型とは オブジェクトのキーの値とプロパティの型を指定することができる。 以下に例を示す。\ntype Weekday = \u0026#39;Mon\u0026#39; | \u0026#39;Tue\u0026#39; | \u0026#39;Wed\u0026#39; | \u0026#39;Thu\u0026#39; | \u0026#39;Fri\u0026#39; type Day = Weekday | \u0026#39;Sat\u0026#39; | \u0026#39;Sun\u0026#39; // 現在の曜日と次の曜日の組み合わせ let nextDay: {[K in Weekday]: Day} = { Mon: \u0026#39;Tue\u0026#39; } 上記は以下のようなエラーを示す。",
-      "url": "https://radish-miyazaki.github.io/2022/4/",
+      "url": "https://radish-miyazaki.github.io/4/",
       "date_published": "2022-03-10 00:00:00 +0000 UTC",
       "tags": ["typescript"]
     }
   
   , 
     {
-      "id": "https://radish-miyazaki.github.io/2022/1/",
+      "id": "https://radish-miyazaki.github.io/1/",
       "title": "What's type declaration",
       "content_text": "概要 .d.tsファイルや その内部に記述されている処理を今までフィーリングで扱っていたので学びなおした。\nコードは一切出て来ないよ！\n 型宣言とは ライブラリなどでよく見かける「.d.ts」という拡張子を持つファイル や スクリプトモードのファイル（.tsファイル） に存在している宣言。\nこれはJSDocアノテーションと同様、型付けされていないJavaScriptコードにTypeScriptの型を結びつけるための方法である。\nDefinitely Typedでは様々なパッケージの型宣言ファイルが公開されている。\n 通常のTypeScriptの構文の違い 通常のTypeScriptの構文とは少し異なる箇所がある。\n 型宣言は型だけを含むことができ、値を含むことはできない  関数・クラス・オブジェクト・変数の実装を持つことはできず、パラメータのデフォルト値を持つことも出来ない。\n型宣言は、JavaScript内のどこかで定義される値が「存在する」ことは宣言できる  専用のキーワードdeclareを使う。\n型宣言は、利用者から見えるものについての型だけを宣言する  エクスポートされない型や、関数の本体内のローカル変数の型のようなものは含まない。\n 型宣言ファイルの用途 型宣言ファイルは以下の用途で使われている。\n どのような型が存在しているかTypeScriptに伝える  コンパイルされたTypeScriptを、ユーザがTypeScriptアプリケーションから使用する時に、 ユーザのTSCインスタンスは、生成されたJavaScriptファイルに対応する.",
-      "url": "https://radish-miyazaki.github.io/2022/1/",
+      "url": "https://radish-miyazaki.github.io/1/",
       "date_published": "2022-03-03 00:00:00 +0000 UTC",
       "tags": ["typescript"]
     }
   
   , 
     {
-      "id": "https://radish-miyazaki.github.io/2022/2/",
+      "id": "https://radish-miyazaki.github.io/2/",
       "title": "Type alias vs Interface",
       "content_text": "概要 社内で「TypeScriptの インタフェース と 型エイリアス の違いが上手くわからない！」 という声が上がっていたので、まとめておく。\n同じところを認識したうえで、違う箇所を見たほうが頭に残るかなということで、両方見ていこう。 まずは、同じところから。\n 同じところ 型エイリアスを使っている箇所はどこでも、インタフェースを使うことができる。\nどちらの宣言も形状を定義しており、それらの形状は互いに割り当てが可能。\n// 型エイリアス type Sushi = { calories: number salty: boolean tasty: boolean } // インタフェース interface Sushi { calories: number salty: boolean tasty: boolean } 更にどちらも型を組み合わせることもできる。まずは型エイリアスから見てみる。",
-      "url": "https://radish-miyazaki.github.io/2022/2/",
+      "url": "https://radish-miyazaki.github.io/2/",
       "date_published": "2022-02-24 00:00:00 +0000 UTC",
       "tags": ["typescript"]
     }
   
   , 
     {
-      "id": "https://radish-miyazaki.github.io/2022/3/",
+      "id": "https://radish-miyazaki.github.io/3/",
       "title": "Ruby Null Object",
       "content_text": "Null Objectとは Null Objectとは、「何もしないメソッド」を持つオブジェクトのこと。\nクラスベースのオブジェクト指向言語（Java, C#など）だと時折見かける。\nclass Huga def huga \u0026#39;huga\u0026#39; end end class NullHuga def huga; end end class Hoge def process_huga(huga) # create_hugaはhuga or nullを返す設定 create_huga || NullHuga.new end end\tNull Objectのメソッドを呼び出すと、エラーを出さずにメッセージをゴミ箱に捨ててくれる。",
-      "url": "https://radish-miyazaki.github.io/2022/3/",
+      "url": "https://radish-miyazaki.github.io/3/",
       "date_published": "2022-02-18 00:00:00 +0000 UTC",
       "tags": ["ruby"]
     }

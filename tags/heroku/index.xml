@@ -10,10 +10,10 @@
     <lastBuildDate>Tue, 30 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://radish-miyazaki.github.io/tags/heroku/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Transition Heroku Redis from Hobby_Dev to Premium on ROR</title>
-      <link>https://radish-miyazaki.github.io/2022/7/</link>
+      <link>https://radish-miyazaki.github.io/7/</link>
       <pubDate>Tue, 30 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/7/</guid>
+      <guid>https://radish-miyazaki.github.io/7/</guid>
       <description>概要 Heroku Dyno, PostgreSQL, Redisの無料プランが10月末日から廃止になるので、開発環境のRedisを有料プランに移行した。
 その際に少々ハマってしまったので、まとめておく。
  開発環境  Rails: 6.1.1.4 Ruby: 2.7.5 Redis: 6.2.3   Hobby_Dev と Premiumの違い Hobby_DevではTLSの有無に関わらず接続が可能だが、PremiumでかつRedisのバージョンが6の場合は、TLS接続が必須となっている。
