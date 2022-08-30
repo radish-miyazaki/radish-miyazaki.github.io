@@ -10,10 +10,10 @@
     <lastBuildDate>Tue, 30 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://radish-miyazaki.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Transition Heroku Redis from Hobby_Dev to Premium on ROR</title>
-      <link>https://radish-miyazaki.github.io/2022/08/30/7/</link>
+      <link>https://radish-miyazaki.github.io/2022/7/</link>
       <pubDate>Tue, 30 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/08/30/7/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/7/</guid>
       <description>概要 Heroku Dyno, PostgreSQL, Redisの無料プランが10月末日から廃止になるので、開発環境のRedisを有料プランに移行した。
 その際に少々ハマってしまったので、まとめておく。
  開発環境  Rails: 6.1.1.4 Ruby: 2.7.5 Redis: 6.2.3   Hobby_Dev と Premiumの違い Hobby_DevではTLSの有無に関わらず接続が可能だが、PremiumでかつRedisのバージョンが6の場合は、TLS接続が必須となっている。
@@ -25,10 +25,10 @@ if Rails.</description>
     
     <item>
       <title>Array vs Slice vs Vector</title>
-      <link>https://radish-miyazaki.github.io/2022/03/24/6/</link>
+      <link>https://radish-miyazaki.github.io/2022/6/</link>
       <pubDate>Thu, 24 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/03/24/6/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/6/</guid>
       <description>概要 以前Rustを学習していたが、業務で新しい言語を学ぶ必要が出てきたので、一時中断していた。
 最近Rustに入門し直したので、その時に出てきた配列とスライスとベクタの違いを備忘録として書き留める。
  配列 ([T; n]) 配列は固定長で、同一型を格納するリストである。
@@ -38,10 +38,10 @@ fn main() { let mut arr = [3, 5, 1, 2, 4]; arr.sort(); println!(&amp;#34;{:?}&am
     
     <item>
       <title>Variance and TypeScript</title>
-      <link>https://radish-miyazaki.github.io/2022/03/17/5/</link>
+      <link>https://radish-miyazaki.github.io/2022/5/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/03/17/5/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/5/</guid>
       <description>概要 型について理解を深める上で必要不可欠となる変性（Variance）をTypescriptを通して学んだので、まとめておく。
  サブタイプとスーパータイプ まずは変性について学ぶ上で、知っておくべき基本的な用語から触れていく。
 サブタイプ A, Bという2つの型があり、BがAのサブタイプである場合、Aが要求されているところはどこでも、Bを安全に使うことができる。
@@ -53,10 +53,10 @@ TypeScriptによる例を以下に示す。
     
     <item>
       <title>Map type &amp; Utility</title>
-      <link>https://radish-miyazaki.github.io/2022/03/10/4/</link>
+      <link>https://radish-miyazaki.github.io/2022/4/</link>
       <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/03/10/4/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/4/</guid>
       <description>概要 前回の社内勉強会でMap型が話題に上がり、自分の復習のためにまとめる。
 マップ型とは オブジェクトのキーの値とプロパティの型を指定することができる。 以下に例を示す。
 type Weekday = &amp;#39;Mon&amp;#39; | &amp;#39;Tue&amp;#39; | &amp;#39;Wed&amp;#39; | &amp;#39;Thu&amp;#39; | &amp;#39;Fri&amp;#39; type Day = Weekday | &amp;#39;Sat&amp;#39; | &amp;#39;Sun&amp;#39; // 現在の曜日と次の曜日の組み合わせ let nextDay: {[K in Weekday]: Day} = { Mon: &amp;#39;Tue&amp;#39; } 上記は以下のようなエラーを示す。</description>
@@ -64,10 +64,10 @@ type Weekday = &amp;#39;Mon&amp;#39; | &amp;#39;Tue&amp;#39; | &amp;#39;Wed&amp;
     
     <item>
       <title>What&#39;s type declaration</title>
-      <link>https://radish-miyazaki.github.io/2022/03/03/1/</link>
+      <link>https://radish-miyazaki.github.io/2022/1/</link>
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/03/03/1/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/1/</guid>
       <description>概要 .d.tsファイルや その内部に記述されている処理を今までフィーリングで扱っていたので学びなおした。
 コードは一切出て来ないよ！
  型宣言とは ライブラリなどでよく見かける「.d.ts」という拡張子を持つファイル や スクリプトモードのファイル（.tsファイル） に存在している宣言。
@@ -83,10 +83,10 @@ Definitely Typedでは様々なパッケージの型宣言ファイルが公開�
     
     <item>
       <title>Type alias vs Interface</title>
-      <link>https://radish-miyazaki.github.io/2022/02/24/2/</link>
+      <link>https://radish-miyazaki.github.io/2022/2/</link>
       <pubDate>Thu, 24 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/02/24/2/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/2/</guid>
       <description>概要 社内で「TypeScriptの インタフェース と 型エイリアス の違いが上手くわからない！」 という声が上がっていたので、まとめておく。
 同じところを認識したうえで、違う箇所を見たほうが頭に残るかなということで、両方見ていこう。 まずは、同じところから。
  同じところ 型エイリアスを使っている箇所はどこでも、インタフェースを使うことができる。
@@ -96,10 +96,10 @@ Definitely Typedでは様々なパッケージの型宣言ファイルが公開�
     
     <item>
       <title>Ruby Null Object</title>
-      <link>https://radish-miyazaki.github.io/2022/02/18/3/</link>
+      <link>https://radish-miyazaki.github.io/2022/3/</link>
       <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/02/18/3/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/3/</guid>
       <description>Null Objectとは Null Objectとは、「何もしないメソッド」を持つオブジェクトのこと。
 クラスベースのオブジェクト指向言語（Java, C#など）だと時折見かける。
 class Huga def huga &amp;#39;huga&amp;#39; end end class NullHuga def huga; end end class Hoge def process_huga(huga) # create_hugaはhuga or nullを返す設定 create_huga || NullHuga.new end end	Null Objectのメソッドを呼び出すと、エラーを出さずにメッセージをゴミ箱に捨ててくれる。</description>
