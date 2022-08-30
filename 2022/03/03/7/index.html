@@ -18,16 +18,18 @@
 その際に少々ハマってしまったので、まとめておく。
  開発環境  Rails: 6.1.1.4 Ruby: 2.7.5 Redis: 6.2.3   Hobby_Dev と Premiumの違い Hobby_DevではTLSの有無に関わらず接続が可能だが、PremiumでかつRedisのバージョンが6の場合は、TLS接続が必須となっている。
 ただし、Heroku側で設定は自動で行ってくれているので、クライアント側ではSSLでの接続をオフにするように設定を追加するだけで良い。
+ サーバ（Heroku）での対応 DashboardのAddons管理ページから簡単にできるので省略。
  クライアント（Rails）での対応 Redisインスタンスの初期設定 config/initializersディレクトリ直下に、redis.rbファイルを作成し、Redisインスタンスの設定を追加。
-if Rails.env.production? $redis = Redis."/>
+if Rails."/>
 
   <meta property="og:title" content="Transition Heroku Redis from Hobby_Dev to Premium on ROR" />
 <meta property="og:description" content="概要 Heroku Dyno, PostgreSQL, Redisの無料プランが10月末日から廃止になるので、開発環境のRedisを有料プランに移行した。
 その際に少々ハマってしまったので、まとめておく。
  開発環境  Rails: 6.1.1.4 Ruby: 2.7.5 Redis: 6.2.3   Hobby_Dev と Premiumの違い Hobby_DevではTLSの有無に関わらず接続が可能だが、PremiumでかつRedisのバージョンが6の場合は、TLS接続が必須となっている。
 ただし、Heroku側で設定は自動で行ってくれているので、クライアント側ではSSLでの接続をオフにするように設定を追加するだけで良い。
+ サーバ（Heroku）での対応 DashboardのAddons管理ページから簡単にできるので省略。
  クライアント（Rails）での対応 Redisインスタンスの初期設定 config/initializersディレクトリ直下に、redis.rbファイルを作成し、Redisインスタンスの設定を追加。
-if Rails.env.production? $redis = Redis." />
+if Rails." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://radish-miyazaki.github.io/2022/03/03/7/" /><meta property="og:image" content="https://radish-miyazaki.github.io/post-cover.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-03T00:00:00+00:00" />
@@ -69,6 +71,9 @@ if Rails.env.production? $redis = Redis." />
 <h2 id="hobby_dev-と-premiumの違い">Hobby_Dev と Premiumの違い</h2>
 <p>Hobby_DevではTLSの有無に関わらず接続が可能だが、PremiumでかつRedisのバージョンが6の場合は、<strong>TLS接続が必須</strong>となっている。</p>
 <p>ただし、<a href="https://devcenter.heroku.com/articles/securing-heroku-redis#stunnel-overview">Heroku側で設定は自動で行ってくれている</a>ので、クライアント側ではSSLでの接続をオフにするように設定を追加するだけで良い。</p>
+<hr>
+<h2 id="サーバherokuでの対応">サーバ（Heroku）での対応</h2>
+<p>DashboardのAddons管理ページから簡単にできるので省略。</p>
 <hr>
 <h2 id="クライアントrailsでの対応">クライアント（Rails）での対応</h2>
 <h3 id="redisインスタンスの初期設定">Redisインスタンスの初期設定</h3>

@@ -18,8 +18,9 @@
 その際に少々ハマってしまったので、まとめておく。
  開発環境  Rails: 6.1.1.4 Ruby: 2.7.5 Redis: 6.2.3   Hobby_Dev と Premiumの違い Hobby_DevではTLSの有無に関わらず接続が可能だが、PremiumでかつRedisのバージョンが6の場合は、TLS接続が必須となっている。
 ただし、Heroku側で設定は自動で行ってくれているので、クライアント側ではSSLでの接続をオフにするように設定を追加するだけで良い。
+ サーバ（Heroku）での対応 DashboardのAddons管理ページから簡単にできるので省略。
  クライアント（Rails）での対応 Redisインスタンスの初期設定 config/initializersディレクトリ直下に、redis.rbファイルを作成し、Redisインスタンスの設定を追加。
-if Rails.env.production? $redis = Redis.</description>
+if Rails.</description>
     </item>
     
     <item>
