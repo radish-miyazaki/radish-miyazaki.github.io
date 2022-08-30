@@ -10,10 +10,10 @@
     <lastBuildDate>Thu, 17 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://radish-miyazaki.github.io/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Variance and TypeScript</title>
-      <link>https://radish-miyazaki.github.io/2022/03/17/covariance_and_typescript/</link>
+      <link>https://radish-miyazaki.github.io/2022/03/17/5/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/03/17/covariance_and_typescript/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/03/17/5/</guid>
       <description>概要 型について理解を深める上で必要不可欠となる変性（Variance）をTypescriptを通して学んだので、まとめておく。
  サブタイプとスーパータイプ まずは変性について学ぶ上で、知っておくべき基本的な用語から触れていく。
 サブタイプ A, Bという2つの型があり、BがAのサブタイプである場合、Aが要求されているところはどこでも、Bを安全に使うことができる。
@@ -25,10 +25,10 @@ TypeScriptによる例を以下に示す。
     
     <item>
       <title>Map type &amp; Utility</title>
-      <link>https://radish-miyazaki.github.io/2022/03/10/map_type/</link>
+      <link>https://radish-miyazaki.github.io/2022/03/10/4/</link>
       <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/03/10/map_type/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/03/10/4/</guid>
       <description>概要 前回の社内勉強会でMap型が話題に上がり、自分の復習のためにまとめる。
 マップ型とは オブジェクトのキーの値とプロパティの型を指定することができる。 以下に例を示す。
 type Weekday = &amp;#39;Mon&amp;#39; | &amp;#39;Tue&amp;#39; | &amp;#39;Wed&amp;#39; | &amp;#39;Thu&amp;#39; | &amp;#39;Fri&amp;#39; type Day = Weekday | &amp;#39;Sat&amp;#39; | &amp;#39;Sun&amp;#39; // 現在の曜日と次の曜日の組み合わせ let nextDay: {[K in Weekday]: Day} = { Mon: &amp;#39;Tue&amp;#39; } 上記は以下のようなエラーを示す。</description>
@@ -36,10 +36,10 @@ type Weekday = &amp;#39;Mon&amp;#39; | &amp;#39;Tue&amp;#39; | &amp;#39;Wed&amp;
     
     <item>
       <title>What&#39;s type declaration</title>
-      <link>https://radish-miyazaki.github.io/2022/03/03/ts_type_declaration/</link>
+      <link>https://radish-miyazaki.github.io/2022/03/03/1/</link>
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/03/03/ts_type_declaration/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/03/03/1/</guid>
       <description>概要 .d.tsファイルや その内部に記述されている処理を今までフィーリングで扱っていたので学びなおした。
 コードは一切出て来ないよ！
  型宣言とは ライブラリなどでよく見かける「.d.ts」という拡張子を持つファイル や スクリプトモードのファイル（.tsファイル） に存在している宣言。
@@ -55,10 +55,10 @@ Definitely Typedでは様々なパッケージの型宣言ファイルが公開�
     
     <item>
       <title>Type alias vs Interface</title>
-      <link>https://radish-miyazaki.github.io/2022/02/24/ts_interface/</link>
+      <link>https://radish-miyazaki.github.io/2022/02/24/2/</link>
       <pubDate>Thu, 24 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://radish-miyazaki.github.io/2022/02/24/ts_interface/</guid>
+      <guid>https://radish-miyazaki.github.io/2022/02/24/2/</guid>
       <description>概要 社内で「TypeScriptの インタフェース と 型エイリアス の違いが上手くわからない！」 という声が上がっていたので、まとめておく。
 同じところを認識したうえで、違う箇所を見たほうが頭に残るかなということで、両方見ていこう。 まずは、同じところから。
  同じところ 型エイリアスを使っている箇所はどこでも、インタフェースを使うことができる。
