@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to solve when &#39;ALTER TABLE&#39; does not work in sqlx | method_missing(*)</title>
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/post.css" />
+  <script defer src="https://radish-miyazaki.github.io/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/common.css" />
+  <link rel="icon" type="image/png" href="https://radish-miyazaki.github.io/assets/icons/ruby.png" />
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://radish-miyazaki.github.io/post-cover.png"/>
+
+<meta name="twitter:title" content="How to solve when &#39;ALTER TABLE&#39; does not work in sqlx"/>
+<meta name="twitter:description" content="概要 Rustでsqlxを使っていた際に、下記のコードだと./migrationsディレクトリに存在するALTER TABLEを用いたSQLファイルが実行されなかったが、なんとか動作するようにはなったので、備忘録としてとどめておく。
+ちなみにsqlx migrate runコマンドだと動作した。
+sqlx::migrate!() .run(&amp;pool) .await .expect(&#34;Cannot run migration&#34;); ALTER TABLE questions ADD COLUMN account_id SERIAL;  開発環境  PostgreSQL: 13 Rust: 1.62   回避策 migrate!マクロの引数に、migrationsディレクトリのパスを指定すると動作するようになった。"/>
+
+  <meta property="og:title" content="How to solve when &#39;ALTER TABLE&#39; does not work in sqlx" />
+<meta property="og:description" content="概要 Rustでsqlxを使っていた際に、下記のコードだと./migrationsディレクトリに存在するALTER TABLEを用いたSQLファイルが実行されなかったが、なんとか動作するようにはなったので、備忘録としてとどめておく。
+ちなみにsqlx migrate runコマンドだと動作した。
+sqlx::migrate!() .run(&amp;pool) .await .expect(&#34;Cannot run migration&#34;); ALTER TABLE questions ADD COLUMN account_id SERIAL;  開発環境  PostgreSQL: 13 Rust: 1.62   回避策 migrate!マクロの引数に、migrationsディレクトリのパスを指定すると動作するようになった。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://radish-miyazaki.github.io/8/" /><meta property="og:image" content="https://radish-miyazaki.github.io/post-cover.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-09-11T00:00:00+00:00" />
+
+
+</head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="https://radish-miyazaki.github.io">method_missing(*)</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">How to solve when &#39;ALTER TABLE&#39; does not work in sqlx</h2>
+          <small class="date">2022-09-11 (Sun)</small>
+          <div class="tags">
+            
+            <a href="https://radish-miyazaki.github.io/tags/postgresql" class="tag">postgresql</a>
+            
+            <a href="https://radish-miyazaki.github.io/tags/rust" class="tag">rust</a>
+            
+          </div>
+        </div>
+        <div class="content"><h2 id="概要">概要</h2>
+<p>Rustでsqlxを使っていた際に、下記のコードだと<code>./migrations</code>ディレクトリに存在する<code>ALTER TABLE</code>を用いたSQLファイルが実行されなかったが、なんとか動作するようにはなったので、備忘録としてとどめておく。</p>
+<p>ちなみに<code>sqlx migrate run</code>コマンドだと動作した。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust">sqlx::migrate<span style="color:#f92672">!</span>()
+  .run(<span style="color:#f92672">&amp;</span>pool)
+  .<span style="color:#66d9ef">await</span>
+  .expect(<span style="color:#e6db74">&#34;Cannot run migration&#34;</span>);
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> questions <span style="color:#66d9ef">ADD</span> <span style="color:#66d9ef">COLUMN</span> account_id SERIAL;
+</code></pre></div><hr>
+<h2 id="開発環境">開発環境</h2>
+<ul>
+<li>PostgreSQL: 13</li>
+<li>Rust: 1.62</li>
+</ul>
+<hr>
+<h2 id="回避策">回避策</h2>
+<p><code>migrate!</code>マクロの引数に、<code>migrations</code>ディレクトリのパスを指定すると動作するようになった。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust">sqlx::migrate<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;./migrations&#34;</span>)
+  .run(<span style="color:#f92672">&amp;</span>pool)
+  .<span style="color:#66d9ef">await</span>
+  .expect(<span style="color:#e6db74">&#34;Cannot run migration&#34;</span>);
+</code></pre></div><p><a href="https://docs.rs/sqlx/latest/sqlx/macro.migrate.html">公式ドキュメント</a>にもある通り、デフォルトでのパスが<code>./migrations</code>になっているので、本来は指定しなくても良いはずだが、試しに追加してみたところ動いた。</p>
+<p>原因はまた時間があるときに調査して、PRを投げておく。</p>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2022 Radish All rights reserved. </p>
+</footer>
+    </main>
+  </body>
+</html>
