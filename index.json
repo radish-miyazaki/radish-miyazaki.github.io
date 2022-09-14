@@ -11,6 +11,16 @@
   
   
     {
+      "id": "https://radish-miyazaki.github.io/9/",
+      "title": "How to accept multiple args in the make command",
+      "content_text": "概要 makeコマンドで複数引数を取れるようにする方法があったので記録する。 Dockerコマンドを集約するときに使うと便利。\n結論 makeコマンドが受け取った、2番目の引数以降の値をすべて対象のコマンドに渡せばOK。\nhogehoge: \u0026lt;引数を渡したいコマンド\u0026gt; $(wordlist 2, $(words $(MAKECMDGOALS) - 2), $(MAKECMDGOALS)) 解説 wordlist Makefileの組み込み関数の一種。 第3引数で指定した値から、第1引数~第2引数の位置の文字列を抽出する。\nhoge: @echo $(wordlist 1, 2, \u0026#34;hoge fuga hoge\u0026#34;) # hoge fuga words 文字列数を返す。",
+      "url": "https://radish-miyazaki.github.io/9/",
+      "date_published": "2022-09-14 00:00:00 +0000 UTC",
+      "tags": ["makefile"]
+    }
+  
+  , 
+    {
       "id": "https://radish-miyazaki.github.io/8/",
       "title": "How to solve when 'ALTER TABLE' does not work in sqlx",
       "content_text": "概要 Rustでsqlxを使っていた際に、下記のコードだと./migrationsディレクトリに存在するALTER TABLEを用いたSQLファイルが実行されなかったが、なんとか動作するようにはなったので、備忘録としてとどめておく。\nちなみにsqlx migrate runコマンドだと動作した。\nsqlx::migrate!() .run(\u0026amp;pool) .await .expect(\u0026#34;Cannot run migration\u0026#34;); ALTER TABLE questions ADD COLUMN account_id SERIAL;  開発環境  PostgreSQL: 13 Rust: 1.62   回避策 migrate!マクロの引数に、migrationsディレクトリのパスを指定すると動作するようになった。",

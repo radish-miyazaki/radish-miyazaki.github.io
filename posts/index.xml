@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>2022 Radish All rights reserved</copyright>
-    <lastBuildDate>Sun, 11 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://radish-miyazaki.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://radish-miyazaki.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to accept multiple args in the make command</title>
+      <link>https://radish-miyazaki.github.io/9/</link>
+      <pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://radish-miyazaki.github.io/9/</guid>
+      <description>概要 makeコマンドで複数引数を取れるようにする方法があったので記録する。 Dockerコマンドを集約するときに使うと便利。
+結論 makeコマンドが受け取った、2番目の引数以降の値をすべて対象のコマンドに渡せばOK。
+hogehoge: &amp;lt;引数を渡したいコマンド&amp;gt; $(wordlist 2, $(words $(MAKECMDGOALS) - 2), $(MAKECMDGOALS)) 解説 wordlist Makefileの組み込み関数の一種。 第3引数で指定した値から、第1引数~第2引数の位置の文字列を抽出する。
+hoge: @echo $(wordlist 1, 2, &amp;#34;hoge fuga hoge&amp;#34;) # hoge fuga words 文字列数を返す。</description>
+    </item>
+    
     <item>
       <title>How to solve when &#39;ALTER TABLE&#39; does not work in sqlx</title>
       <link>https://radish-miyazaki.github.io/8/</link>
