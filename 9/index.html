@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to accept multiple args in the make command | method_missing(*)</title>
+  <title>make コマンドで複数引数を取れるようにする | method_missing(*)</title>
   <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/post.css" />
   <script defer src="https://radish-miyazaki.github.io/assets/js/lbox.js"></script>
   
@@ -13,13 +13,13 @@
   <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://radish-miyazaki.github.io/post-cover.png"/>
 
-<meta name="twitter:title" content="How to accept multiple args in the make command"/>
+<meta name="twitter:title" content="make コマンドで複数引数を取れるようにする"/>
 <meta name="twitter:description" content="概要 makeコマンドで複数引数を取れるようにする方法があったので記録する。 Dockerコマンドを集約するときに使うと便利。
 結論 makeコマンドが受け取った、2番目の引数以降の値をすべて対象のコマンドに渡せばOK。
 hogehoge: &lt;引数を渡したいコマンド&gt; $(wordlist 2, $(words $(MAKECMDGOALS) - 2), $(MAKECMDGOALS)) 解説 wordlist Makefileの組み込み関数の一種。 第3引数で指定した値から、第1引数~第2引数の位置の文字列を抽出する。
 hoge: @echo $(wordlist 1, 2, &#34;hoge fuga hoge&#34;) # hoge fuga words 文字列数を返す。"/>
 
-  <meta property="og:title" content="How to accept multiple args in the make command" />
+  <meta property="og:title" content="make コマンドで複数引数を取れるようにする" />
 <meta property="og:description" content="概要 makeコマンドで複数引数を取れるようにする方法があったので記録する。 Dockerコマンドを集約するときに使うと便利。
 結論 makeコマンドが受け取った、2番目の引数以降の値をすべて対象のコマンドに渡せばOK。
 hogehoge: &lt;引数を渡したいコマンド&gt; $(wordlist 2, $(words $(MAKECMDGOALS) - 2), $(MAKECMDGOALS)) 解説 wordlist Makefileの組み込み関数の一種。 第3引数で指定した値から、第1引数~第2引数の位置の文字列を抽出する。
@@ -39,7 +39,7 @@ hoge: @echo $(wordlist 1, 2, &#34;hoge fuga hoge&#34;) # hoge fuga words 文字�
 
       <section class="article">
         <div class="article-header">
-          <h2 class="article-title">How to accept multiple args in the make command</h2>
+          <h2 class="article-title">make コマンドで複数引数を取れるようにする</h2>
           <small class="date">2022-09-14 (Wed)</small>
           <div class="tags">
             
@@ -80,7 +80,7 @@ Dockerコマンドを集約するときに使うと便利。</p>
 </div>
       </section>
       <footer>
-  <p>&copy; 2022 Radish All rights reserved. </p>
+  <p>&copy; 2023 Radish All rights reserved. </p>
 </footer>
     </main>
   </body>
