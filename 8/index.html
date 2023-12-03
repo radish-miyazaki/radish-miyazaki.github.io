@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rust sqlx で &#39;ALTER TABLE&#39; が動作しない問題への対応 | method_missing(*)</title>
+  <title>Rust sqlxで&#39;ALTER TABLE&#39;が動作しない問題への対応 | method_missing(*)</title>
   <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/post.css" />
   <script defer src="https://radish-miyazaki.github.io/assets/js/lbox.js"></script>
   
@@ -13,12 +13,12 @@
   <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://radish-miyazaki.github.io/post-cover.png"/>
 
-<meta name="twitter:title" content="Rust sqlx で &#39;ALTER TABLE&#39; が動作しない問題への対応"/>
+<meta name="twitter:title" content="Rust sqlxで&#39;ALTER TABLE&#39;が動作しない問題への対応"/>
 <meta name="twitter:description" content="概要 Rustでsqlxを使っていた際に、下記のコードだと./migrationsディレクトリに存在するALTER TABLEを用いたSQLファイルが実行されなかったが、なんとか動作するようにはなったので、備忘録としてとどめておく。
 ちなみにsqlx migrate runコマンドだと動作した。
 sqlx::migrate!() .run(&amp;pool) .await .expect(&#34;Cannot run migration&#34;); ALTER TABLE questions ADD COLUMN account_id SERIAL;  開発環境  PostgreSQL: 13 Rust: 1.62   回避策 migrate!マクロの引数に、migrationsディレクトリのパスを指定すると動作するようになった。"/>
 
-  <meta property="og:title" content="Rust sqlx で &#39;ALTER TABLE&#39; が動作しない問題への対応" />
+  <meta property="og:title" content="Rust sqlxで&#39;ALTER TABLE&#39;が動作しない問題への対応" />
 <meta property="og:description" content="概要 Rustでsqlxを使っていた際に、下記のコードだと./migrationsディレクトリに存在するALTER TABLEを用いたSQLファイルが実行されなかったが、なんとか動作するようにはなったので、備忘録としてとどめておく。
 ちなみにsqlx migrate runコマンドだと動作した。
 sqlx::migrate!() .run(&amp;pool) .await .expect(&#34;Cannot run migration&#34;); ALTER TABLE questions ADD COLUMN account_id SERIAL;  開発環境  PostgreSQL: 13 Rust: 1.62   回避策 migrate!マクロの引数に、migrationsディレクトリのパスを指定すると動作するようになった。" />
@@ -37,7 +37,7 @@ sqlx::migrate!() .run(&amp;pool) .await .expect(&#34;Cannot run migration&#34;);
 
       <section class="article">
         <div class="article-header">
-          <h2 class="article-title">Rust sqlx で &#39;ALTER TABLE&#39; が動作しない問題への対応</h2>
+          <h2 class="article-title">Rust sqlxで&#39;ALTER TABLE&#39;が動作しない問題への対応</h2>
           <small class="date">2022-09-11 (Sun)</small>
           <div class="tags">
             
