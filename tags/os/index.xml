@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>os on method_missing(*)</title>
+    <link>https://radish-miyazaki.github.io/tags/os/</link>
+    <description>Recent content in os on method_missing(*)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>2022 Radish All rights reserved</copyright>
+    <lastBuildDate>Thu, 07 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://radish-miyazaki.github.io/tags/os/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>コンピュータにおける『時間』</title>
+      <link>https://radish-miyazaki.github.io/10/</link>
+      <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://radish-miyazaki.github.io/10/</guid>
+      <description>これは「Timelab Advent Calendar 2023」の7日目の記事です。 https://adventar.org/calendars/9244
+はじめに 今回、業務委託で一緒にお仕事をさせていただいている、Timelab さんのアドベントカレンダーに参加することになりました！
+テーマは『時間』とのことなので、コンピュータにおける『時間』（システム時間）について、簡単に整理したいと思います。
+システム時間 システム時間は、コンピュータの OS が提供する現在時刻のことを指します。
+この時間は Epoch（基準）からの経過時間として表現され、プログラムやシステムはこの時間を用いて様々なイベントの順序やタイムスタンプを管理しています。
+MacOS や Linux などの Unix系OS では、Epoch として Unix time を採用しているので、1970年1月1日 00:00:00 UTC 時点からの秒数で時間を表現します。
+このことは、MacOS の場合ターミナル上でdateコマンドを実行すると確認できます。</description>
+    </item>
+    
+  </channel>
+</rss>

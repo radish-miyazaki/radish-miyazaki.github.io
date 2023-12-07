@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>コンピュータにおける『時間』 | method_missing(*)</title>
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/post.css" />
+  <script defer src="https://radish-miyazaki.github.io/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="https://radish-miyazaki.github.io/assets/css/common.css" />
+  <link rel="icon" type="image/png" href="https://radish-miyazaki.github.io/assets/icons/ruby.png" />
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://radish-miyazaki.github.io/post-cover.png"/>
+
+<meta name="twitter:title" content="コンピュータにおける『時間』"/>
+<meta name="twitter:description" content="これは「Timelab Advent Calendar 2023」の7日目の記事です。 https://adventar.org/calendars/9244
+はじめに 今回、業務委託で一緒にお仕事をさせていただいている、Timelab さんのアドベントカレンダーに参加することになりました！
+テーマは『時間』とのことなので、コンピュータにおける『時間』（システム時間）について、簡単に整理したいと思います。
+システム時間 システム時間は、コンピュータの OS が提供する現在時刻のことを指します。
+この時間は Epoch（基準）からの経過時間として表現され、プログラムやシステムはこの時間を用いて様々なイベントの順序やタイムスタンプを管理しています。
+MacOS や Linux などの Unix系OS では、Epoch として Unix time を採用しているので、1970年1月1日 00:00:00 UTC 時点からの秒数で時間を表現します。
+このことは、MacOS の場合ターミナル上でdateコマンドを実行すると確認できます。"/>
+
+  <meta property="og:title" content="コンピュータにおける『時間』" />
+<meta property="og:description" content="これは「Timelab Advent Calendar 2023」の7日目の記事です。 https://adventar.org/calendars/9244
+はじめに 今回、業務委託で一緒にお仕事をさせていただいている、Timelab さんのアドベントカレンダーに参加することになりました！
+テーマは『時間』とのことなので、コンピュータにおける『時間』（システム時間）について、簡単に整理したいと思います。
+システム時間 システム時間は、コンピュータの OS が提供する現在時刻のことを指します。
+この時間は Epoch（基準）からの経過時間として表現され、プログラムやシステムはこの時間を用いて様々なイベントの順序やタイムスタンプを管理しています。
+MacOS や Linux などの Unix系OS では、Epoch として Unix time を採用しているので、1970年1月1日 00:00:00 UTC 時点からの秒数で時間を表現します。
+このことは、MacOS の場合ターミナル上でdateコマンドを実行すると確認できます。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://radish-miyazaki.github.io/10/" /><meta property="og:image" content="https://radish-miyazaki.github.io/post-cover.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-12-07T00:00:00+00:00" />
+
+
+</head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="https://radish-miyazaki.github.io">method_missing(*)</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">コンピュータにおける『時間』</h2>
+          <small class="date">2023-12-07 (Thu)</small>
+          <div class="tags">
+            
+            <a href="https://radish-miyazaki.github.io/tags/linux" class="tag">linux</a>
+            
+            <a href="https://radish-miyazaki.github.io/tags/os" class="tag">os</a>
+            
+          </div>
+        </div>
+        <div class="content"><p><strong>これは「Timelab Advent Calendar 2023」の7日目の記事です。</strong>
+<a href="https://adventar.org/calendars/9244">https://adventar.org/calendars/9244</a></p>
+<h2 id="はじめに">はじめに</h2>
+<p>今回、業務委託で一緒にお仕事をさせていただいている、<a href="https://timelab.jp/">Timelab さん</a>のアドベントカレンダーに参加することになりました！</p>
+<p>テーマは『時間』とのことなので、コンピュータにおける『時間』（システム時間）について、簡単に整理したいと思います。</p>
+<h2 id="システム時間">システム時間</h2>
+<p>システム時間は、コンピュータの OS が提供する現在時刻のことを指します。</p>
+<p>この時間は Epoch（基準）からの経過時間として表現され、プログラムやシステムはこの時間を用いて様々なイベントの順序やタイムスタンプを管理しています。</p>
+<p>MacOS や Linux などの Unix系OS では、Epoch として Unix time を採用しているので、1970年1月1日 00:00:00 UTC 時点からの秒数で時間を表現します。</p>
+<p>このことは、MacOS の場合ターミナル上で<code>date</code>コマンドを実行すると確認できます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ date
+date <span style="color:#75715e"># 現在時刻を表示</span>
+&gt; 2023年 12月 3日 日曜日 18時09分28秒 JST
+
+$ date +%s <span style="color:#75715e"># 現在時刻のシステム時間を表示</span>
+&gt; <span style="color:#ae81ff">1701594597</span>
+
+$ date -r <span style="color:#ae81ff">0</span> <span style="color:#75715e"># Unix timeを表示</span>
+&gt; 1970年 1月 1日 木曜日 09時00分00秒 JST
+</code></pre></div><p>余談ですが、たまにニュースなどで目にする『2038年問題』は、この Unix time と 32bit符号付き整数（int32）に起因する問題であったりします。</p>
+<h2 id="どのように時を刻んでいるか">どのように時を刻んでいるか</h2>
+<p>システム時間は、OS が管理する<strong>システムクロック</strong>によって時を刻んでいます。</p>
+<p>システムクロックとは、CPU が複数の電子回路同士が信号を送受信するタイミングを揃えるために用いられるクロック信号を指します。</p>
+<p>クロック信号は定期的に振動し、OS はそのサイクルに同期してシステム時間を進めています。</p>
+<p>コンピュータのクロック信号は、一般的に数GHzと非常に高周波数なので、精度高く時間を進めることができます。</p>
+<h2 id="シャットダウン時にも時を刻む">シャットダウン時にも時を刻む</h2>
+<p>システムクロックは OS 上で動作するので、コンピュータの電源を切る（OS をシャットダウンする）と、システム時間は停止してしまいます。</p>
+<p>したがって、コンピュータを再起動すると、終了した時間からまた時を刻み続けて、実際の時間とズレが生じてしまいます。</p>
+<p>この問題を解決するために、コンピュータには<strong>RTC</strong>（Real Time Clock）というハードウェアが組み込まれています。</p>
+<p>RTCは、シャットダウンする前にシステムクロックから渡された時間情報を用いて、電源がオフの間中時を刻み続けます。</p>
+<p>逆に、電源がオンになったときには、OSが起動したタイミングでシステムクロックに時間情報を渡して、時を刻む作業をシステムクロックに任せます。</p>
+<p>多くの RTC は、マザーボード上にある専用の電池によって動作するので、長年放置していると電池切れによって時間の挙動が不安定になります。</p>
+<p>あるあるかと思うのですが、長い間使っていないコンピュータやデバイスを久々に起動したら、時間がリセットされている現象はこれに起因しています。</p>
+<p>ちなみに Linux だと<code>hwclock</code>コマンドを実行することで、RTC が管理している時刻の読み出しができるのですが、MacOS だとデフォルトで入っていないようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ hwclock --show
+</code></pre></div><h2 id="時間のズレへの対応">時間のズレへの対応</h2>
+<p>システムクロックは非常に高精度ですが、RTC はそれほど精度が高くありません。</p>
+<p>そのため、OS のシャットダウンを繰り返しているとどうしても実際の時間とのズレが生じます。</p>
+<p>この問題を解消するために、OS は定期的にバックグラウンドで、<strong>NTP</strong> を用いて時刻を正確に合わせています。</p>
+<p>NTP は RFC 5905 で規定されている、ネットワーク上で時計を同期させるためのプロトコルです。</p>
+<p>OS はまず NTP を利用して、ネットワーク上の NTP サーバから時間情報を取得します。</p>
+<p>そして、この情報をもとにシステムクロックに反映させ、システム時間を正確に調整することで、ネットワーク上の時間と同期を行います。</p>
+<p>MacOS では、<code>sntp</code>コマンドか、システム設定 &gt; 一般 &gt; 日付と時刻から、NTP サーバの設定を行うことができます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo sntp -sS ntp.nict.jp
+</code></pre></div><p>デフォルトでは、Apple の NTP サーバ（time.apple.com.）に接続するようになっているはずです。</p>
+<h2 id="所感">所感</h2>
+<p>少々マニアック、かつ他の方が話す内容とは全く方向性が異なりますが、最後まで読んでいただきありがとうございます。</p>
+<p>普段触っている場所とは全くレイヤが異なるので、まとめるのにも少し苦労しましたが、文章に落とし込むことでだいぶ腑に落ちました。</p>
+<p>もし間違っている箇所などあれば、<a href="https://twitter.com/ruby_engineer">Twitter</a> をやっておりますので、そちらに DM などいただけますと嬉しいです！</p>
+<h2 id="参考文献">参考文献</h2>
+<ul>
+<li><a href="https://e-words.jp/w/%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%99%82%E5%88%BB.html">システム時刻 【system time】 システム時間 / システム日時</a></li>
+<li><a href="https://linuc.org/study/knowledge/442/">Linux豆知識 112「ハードウェアクロック」と「システムクロック」</a></li>
+<li><a href="http://archive.linux.or.jp/JF/JFdocs/Clock/time-tracking.html">2. Linux はどのように時間を計っているのか</a></li>
+<li><a href="https://tex2e.github.io/rfc-translater/html/rfc5905.html">RFC 5905 - Network Time Protocol Version 4: Protocol and Algorithms Specification 日本語訳</a></li>
+<li><a href="https://atmarkit.itmedia.co.jp/flinux/rensai/linuxtips/030timeset.html">時間を正確に合わせるには</a></li>
+</ul>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2023 Radish All rights reserved. </p>
+</footer>
+    </main>
+  </body>
+</html>
