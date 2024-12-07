@@ -5,22 +5,22 @@ rssLimit = 20
 copyright = "2022 Radish All rights reserved"
 minify = false
 summaryLength = 30
+timeZone = "Asia/Tokyo"
 
 [params]
-  description = 'Radish technical blog.'
-  images = ['post-cover.png']
+description = 'Radish technical blog.'
+images = ['post-cover.png']
 
 [Author]
-  name = "radish"
+name = "radish"
 
 [permalinks]
-  posts = "/:filename"
-  pages = "/:slug"
+posts = "/:filename"
+pages = "/:slug"
 
 [taxonomies]
-  tag = "tags"
-  category = "categories"
+tag = "tags"
+category = "categories"
 
 [outputs]
-  home = ["html", "json", "rss"]
-
+home = ["html", "json", "rss"]
